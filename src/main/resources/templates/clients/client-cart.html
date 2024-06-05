@@ -1,0 +1,489 @@
+<div th:fragment="ClientCart">
+
+
+    <div th:if="${messageOrder != null}">
+        <h2 class="alert align-center alert-success" th:text="${messageOrder}"></h2>
+        <script>
+            alert("Bạn đã đặt hàng thành công")
+        </script>
+    </div>
+    <div th:if="${messageCancelOrder != null}">
+        <h2 class="alert align-center alert-success" th:text="${messageOrder}"></h2>
+        <script>
+            alert("Bạn đã hủy đơn hàng thành công!!")
+        </script>
+    </div>
+
+    <section class="container clearfix fixed-height mt20">
+<!--        <nav class="steep_booking mb30">-->
+<!--            <div class="steep_booking d-lg-none mb30">-->
+<!--                <a href="" class="current">-->
+<!--                    <span>1</span>-->
+<!--                    Shopping Cart-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="d-lg-block d-none">-->
+<!--                <a href="" class="current">-->
+<!--                    <span>1</span>-->
+<!--                    Shopping Cart-->
+<!--                </a>-->
+<!--                <a href="" class="">-->
+<!--                    <span>2</span>-->
+<!--                    Checkout details-->
+<!--                </a>-->
+<!--                <a href="" class="">-->
+<!--                    <span>3</span>-->
+<!--                    Order Complete-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </nav>-->
+
+        <div class="text-center mb40">
+<!--            <p class="cart-empty woocommerce-info">Chưa có sản phẩm nào trong giỏ hàng.</p>-->
+            <button type="submit" class="btn-green btn uppercase" style="border-radius: 0;"><a href="/product">Quay trở lại cửa hàng</a></button>
+        </div>
+        <div class="steep steep1">
+            <div style="color:#7a9c59;font-size: 16px;" class="mb20">
+                <svg class="icon-svg">
+                    <use xlink:href="images/icons/icon.svg#checked"></use>
+                </svg>
+<!--                “Sữa rửa mặt Laco DNA (Laco DNA Face wash)” đã được thêm vào giỏ hàng.-->
+            </div>
+            <div class="row">
+                <div class="col-lg-8 list-cart mb20">
+                    <div class="table-responsive table-default">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th colspan="2" style="width:390px">SẢN PHẨM</th>
+                                <th>GIÁ</th>
+                                <th></th>
+                                <th>SỐ LƯỢNG</th>
+                                <th style="width:100px">TẠM TÍNH</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="obj : ${cartItems}" th:data-id="${obj.product.id}"  th:data-stock="${obj.product.quantity}">
+                                <td>
+                                    <a class="remove"  th:href="${'/cartItem/delete/' + obj.id}" onclick="return confirm('Are you sure?')">
+                                        <svg class="icon-svg">
+                                            <use xlink:href="images/icons/icon.svg#close2"></use>
+                                        </svg>
+                                    </a>
+                                </td>
+                                <td style="width:330px">
+                                    <a href="#" class="san-pham">
+                                        <div class="img"><img style="height: 60%" th:src="'/images/products/' + ${obj.product.image}"></div>
+                                        <div class="name" th:text="${obj.product.productName}"></div>
+                                    </a>
+                                </td>
+                                <td><strong class="price" th:text="${obj.product.price}">260.000₫</strong></td>
+                                <td><strong class="price-hidden check-product hidden" style="display: none" th:text="${obj.product.price}">260.000₫</strong></td>
+                                <td>
+                                    <div class="ct_quantity">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="my-quantity-left-minus btn btn-number" data-type="minus" th:data-id="${obj.product.id}">
+                                                    <svg class="icon-svg">
+                                                        <use xlink:href="images/icons/icon.svg#Minus"></use>
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                            <input type="text" th:id="'quantity-' + ${obj.product.id}" name="quantity" class="form-control input-number" th:value="${obj.quantity}" min="1" max="100">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="my-quantity-right-plus btn btn-number" data-type="plus" th:data-id="${obj.product.id}">
+                                                    <svg class="icon-svg">
+                                                        <use xlink:href="images/icons/icon.svg#Plus"></use>
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><strong class="total-price price" th:text="${obj.product.price * obj.quantity}" >260.000₫</strong></td>
+                                <td><strong class="total-price-hidden hidden" style="display: none" th:text="${obj.product.price * obj.quantity}" >260.000₫</strong></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <script>
+
+
+                            function updateTotal() {
+                                const totalCartItems = document.querySelectorAll('.total-price-hidden');
+                                const totalCart = document.querySelectorAll('.totalOrder');
+                                const totalPayment = document.querySelectorAll('.total-payment');
+                                let total = 0;
+
+                                totalCartItems.forEach(function(el) {
+                                    let value = parseFloat(el.innerText.replace(/[^0-9.-]+/g, ""));
+                                    total += value;
+                                });
+
+                                const totalPriceOrder = document.querySelector('#totalPriceOrder')
+                                totalPriceOrder.setAttribute("value", total);
+
+                                // Định dạng lại tổng giá trị trước khi hiển thị
+                                totalCart.forEach(el => el.innerText = formatCurrency(total) + '₫');
+                                totalPayment.forEach(el => el.innerText = formatCurrency(total) + '₫');
+                            }
+
+                            document.addEventListener('DOMContentLoaded', function() {
+                                document.querySelectorAll('.my-quantity-left-minus, .my-quantity-right-plus').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const type = this.getAttribute('data-type');
+                                        const id = this.getAttribute('data-id');
+                                        const stock = parseInt(document.querySelector(`[data-id="${id}"]`).getAttribute('data-stock'));
+
+                                        const quantityInput = document.getElementById(`quantity-${id}`);
+                                        let currentQuantity = parseInt(quantityInput.value);
+
+                                        if (type === 'minus' && currentQuantity > 1) {
+                                            currentQuantity--;
+                                        } else if (type === 'plus') {
+                                            if (currentQuantity < stock) {
+                                                currentQuantity++;
+                                            } else {
+                                                alert('Số lượng vượt quá số lượng trong kho');
+                                                return;
+                                            }                                        }
+
+                                        quantityInput.value = currentQuantity;
+                                        // Cập nhật lại luôn số lượng
+                                        // quantityInput.setAttribute('value', currentQuantity);
+                                        // Gửi yêu cầu AJAX để cập nhật số lượng
+                                        fetch('/cart/updateQuantity', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({ productId: id, quantity: currentQuantity })
+                                        }).then(response => {
+                                            if (response.ok) {
+                                                // Update total price for the product
+                                                const priceElement = document.querySelector(`[data-id="${id}"] .price-hidden`);
+                                                const totalPriceHidden = document.querySelector(`[data-id="${id}"] .total-price-hidden`);
+                                                const totalPriceElement = document.querySelectorAll(`[data-id="${id}"] .total-price`);
+                                                const quantityElement = document.querySelectorAll(`[data-id="${id}"] .quantity-element`);
+                                                const price = parseFloat(priceElement.innerText.replace(/[^0-9.-]+/g,""));
+                                                const totalPrice = price * currentQuantity;
+                                                totalPriceHidden.innerText = totalPrice;
+                                                totalPriceElement[0].innerText = formatCurrency(totalPrice) + '₫';
+                                                totalPriceElement[1].innerText = formatCurrency(totalPrice) + '₫';
+
+                                                quantityInput.setAttribute('value', currentQuantity);
+
+                                                quantityElement.forEach(el => el.textContent = ' x ' + currentQuantity + ')');
+
+                                                // quantityElement[0].setAttribute('value', currentQuantity + ')');
+
+
+
+                                                // Update total order price
+                                                updateTotal();
+                                            } else {
+                                                response.text().then(text => alert(text));
+                                            }
+                                        }).catch(error => alert(error));
+                                    });
+                                });
+
+                                // Initial total calculation
+                                updateTotal();
+                            });
+
+
+                        </script>
+
+
+
+                    </div>
+                    <a href="/product" class="red-more">Tiếp tục xem sản phẩm →</a>
+                </div>
+                <div class="col-lg-4 cart-sidebar mb20">
+                    <div class="table-responsive table-default">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th colspan="2">CỘNG GIỎ HÀNG</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Tạm tính</td>
+                                <td class="text-right totalOrder"  id="totalOrder"><strong>260.000₫</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Phiếu giảm giá</td>
+                                <td class="text-right priceDiscount"  id="priceDiscount"><strong>0₫</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Tổng thanh toán</td>
+                                <td class="text-right total-payment" id="total-payment"><strong>260.000₫</strong></td>
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <form class="checkout_coupon mt20" method="post" action="/cart" id="discountForm">
+                        <h3 class="widget-title">
+                            <svg class="icon-svg">
+                                <use xlink:href="images/icons/icon.svg#tag"></use>
+                            </svg>
+                            Phiếu ưu đãi
+                        </h3>
+                        <div id="discountMessage" class="alert" style="display: none;"></div>
+                        <div class="form-group">
+                            <input type="text" name="codeName" class="form-control" placeholder="Mã ưu đãi" id="codeName">
+                        </div>
+                        <button type="submit" class="btn btn-default full border-success">Áp dụng</button>
+                    </form>
+
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        // function formatCurrency(num) {
+                        //     return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+                        // }
+
+                        $(document).ready(function () {
+                            $('#discountForm').on('submit', function (e) {
+                                e.preventDefault();
+
+                                var codeName = $('#codeName').val();
+
+                                $.ajax({
+                                    url: '/cart/applyDiscount',
+                                    type: 'POST',
+                                    data: { codeName: codeName },
+                                    success: function (response) {
+                                        var discountPercent = response.percent;
+                                        // var totalOrder = parseFloat($('#totalOrder').text().replace(/[^0-9.-]+/g, ""));
+                                        const totalCartItems = document.querySelectorAll('.total-price-hidden');
+                                        let total = 0;
+
+                                        totalCartItems.forEach(function(el) {
+                                            let value = parseFloat(el.innerText.replace(/[^0-9.-]+/g, ""));
+                                            total += value;
+                                        });
+
+                                        var discountAmount = (total * discountPercent) / 100;
+                                        var totalPayment = total - discountAmount;
+
+                                        // Tạo giá trị cho inpupt ẩn để cập nhật tổng số tiền
+                                        $('#totalPriceOrder').val(totalPayment);
+
+                                        // Taoj gias trij cho discountCodeName input trong form /cart/order để giảm sô lượng mã giảm giá
+                                        $('#discountCodeName').val($('#codeName').val())
+                                        // alert($('#totalPriceOrder').value)
+
+                                        $('.total-payment').html('<strong>' + formatCurrency(totalPayment) + '₫</strong>');
+                                        $('.priceDiscount').html('<strong> - ' + formatCurrency(discountAmount) + '₫</strong>');
+                                        $('#discountMessage').removeClass('alert-danger').addClass('alert-success').text('Mã giảm giá đã được áp dụng!').show();
+                                    },
+                                    error: function () {
+                                        $('#discountMessage').removeClass('alert-success').addClass('alert-danger').text('Mã giảm giá không hợp lệ!').show();
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="steep steep2" th:if="${account}">
+            <div class="message-container">
+                <p>Bạn có mã ưu đãi? <a href="#" class="showcoupon">Ấn vào đây để nhập mã</a></p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-7 list-cart mb20">
+
+                    <form id="accountForm" class="form-default" th:if="${account}" action="/cart/updateAccount" th:object="${account}" method="post" style="padding-top: 15px;border-top: 2px solid #ddd;">
+                        <h2 class="mb15">Thông tin người nhận</h2>
+                        <div class="form-group">
+                            <label for="fullname">Họ và tên:</label>
+                            <input type="text" name="fullName" id="fullname" class="form-control" placeholder="Nhap ho ten nguoi nhan...." th:value="*{fullName}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại:</label>
+                            <input type="text" name="phone" id="phone" class="form-control" placeholder="Nhap so dien thoai" th:value="*{phone}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Địa chỉ:</label>
+                            <input type="text" name="address" id="address" class="form-control" placeholder="Nhap dia chi..." th:value="*{address}">
+                        </div>
+
+                        <h2 class="mb15 mt30">Thông tin bổ sung</h2>
+                        <div class="form-group">
+                            <label for="note">Ghi chú đơn hàng:</label>
+<!--                            <textarea style="height: 100px;" name="note" th:if="${note}"  th:text="${note}" class="form-control" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>-->
+<!--                            <textarea style="height: 100px;" name="note" th:if="!${note}"  class="form-control" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>-->
+                            <textarea style="height: 100px;" name="note" id="note" class="form-control"
+                                      th:text="${note} ?: ''"
+                                      placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>
+                        </div>
+                        <button type="submit" class="btn-green btn uppercase" style="border-radius: 0;">Xác nhận thông tin</button>
+                    </form>
+
+
+
+                </div>
+                <div class="col-lg-5 cart-sidebar mb20">
+                  <form action="/cart/order" method="post" id="submitOrder">
+                      <div style="border:2px solid #86b732;padding:15px 20px">
+                          <h2>ĐƠN HÀNG CỦA BẠN</h2>
+                          <div class="table-responsive table-default">
+                              <table class="table">
+                                  <thead>
+                                  <tr>
+                                      <th>SẢN PHẨM</th>
+                                      <th class="text-right">TẠM TÍNH</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr th:each="obj : ${cartItems}" th:data-id="${obj.product.id}">
+                                      <td > <span th:text="${obj.product.productName}"></span> <span th:text="'( ' + ${obj.product.price}"></span>  <Strong class="quantity-element" > <span th:text="' x ' + ${obj.quantity} + ' )'"></span> </Strong></td>
+                                      <td class="text-right"><strong class="total-price price" th:text="${obj.product.price * obj.quantity}" >260.000₫</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td colspan="2"><hr style="border: 1px solid green;"></td>
+                                  </tr>
+                                  <tr>
+                                      <td>Tạm tính</td>
+                                      <td ><strong class="text-right totalOrder">260.000₫</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td>Phiếu giảm giá</td>
+                                      <td ><strong class="text-right priceDiscount">0₫</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td>Tổng thanh toán</td>
+                                      <td ><strong name="" class="text-right total-payment text-success">260.000₫</strong></td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                              <input style="display: none" id="totalPriceOrder" name="totalPriceOrder" >
+                              <input style="display: none" id="discountCodeName" name="discountCodeName" >
+                          </div>
+                          <p class="txt_14">
+                              <strong style="color: #222;">Trả tiền mặt khi nhận hàng & MIỄN PHÍ vận chuyển</strong></br>
+                              Miễn Phí vận chuyển toàn bộ đơn hàng!!!
+                          </p>
+                          <button type="button" id="buttonSubmitOrder" class="btn-green btn uppercase" style="border-radius: 0;">ĐẶT HÀNG</button>
+                      </div>
+                  </form>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Lấy form và nút submit
+                    var submitOrder = document.getElementById('submitOrder');
+                    var buttonSubmitOrder = document.getElementById('buttonSubmitOrder');
+                    var submitButton = submitOrder.querySelector('button[type="button"]');
+
+                    // Lắng nghe sự kiện submit của form
+                    buttonSubmitOrder.addEventListener('click', function(event) {
+                        // Lấy giá trị của các trường input
+                        var fullName = document.getElementById('fullname').value.trim();
+                        var phone = document.getElementById('phone').value.trim();
+                        var address = document.getElementById('address').value.trim();
+                        var note = document.getElementById('note').value.trim();
+
+                        var checkProduct = document.getElementsByClassName('check-product');
+
+                        if(checkProduct.length == 0) {
+                            event.preventDefault();
+                            alert('Giỏ hàng chưa có sản phẩm . Vui lòng thêm sản phẩm trước khi đặt hàng');
+                        }
+
+                        // Kiểm tra nếu bất kỳ trường nào bị bỏ trống
+                        else if (!fullName || !phone || !address) {
+                            // Ngăn chặn form submit
+                            event.preventDefault();
+                            // Hiển thị thông báo yêu cầu nhập đủ thông tin
+                            alert('Yêu cầu nhập đủ thông tin đơn hàng: Họ và tên, Số điện thoại, Địa chỉ, và Ghi chú.');
+                        } else{
+                            submitOrder.submit();
+                        }
+                    });
+                });
+            </script>
+        </div>
+
+        <div class="steep steep3" th:if="${orders}">
+            <div class="message-container">
+                <p>Bạn được kiểm tra hàng trước khi thanh toán cho bưu tá!!!</p>
+            </div>
+
+            <div class="row" th:each="obj : ${orders}">
+                <div class="col-lg-7 list-cart mb20">
+                    <div class="table-responsive table-default">
+                        <hr style="border: 2px solid green">
+                        <h2 class="mb15 bold" style="font-size: 25px;">Chi tiết đơn hàng</h2>
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>SẢN PHẨM</th>
+                                <th class="text-right">TỔNG</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${obj.cartItems}" th:data-id="${item.product.id}">
+                                <td > <span th:text="${item.product.productName}"></span> <span th:text="'( ' + ${item.product.price}"></span>  <Strong class="quantity-element" > <span th:text="' x ' + ${item.quantity} + ' )'"></span> </Strong></td>
+                                <td class="text-right"><strong class="total-price price" th:text="${item.product.price * item.quantity}" >260.000₫</strong></td>
+                            </tr>
+
+<!--                            <tr>-->
+<!--                                <td></td>-->
+<!--                                <td class="text-right text-primary"><strong class="text-right price" th:text="${obj.totalPrice}">260.000₫</strong></td>-->
+<!--                            </tr> -->
+                            <tr>
+                                <td>Tổng số tiền phải trả</td>
+                                <td class="text-right text-primary"><strong class="text-right price" th:text="${obj.totalPrice}">260.000₫</strong></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-5 cart-sidebar mb20">
+                    <div style="padding:15px 20px;background-color: rgba(0,0,0,0.02);box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.2), 0 1px 0 rgba(0,0,0,0.07), inset 0 0 0 1px rgba(0,0,0,0.05);">
+                        <h3 class="txt_18 bold mb15" style="color:#7a9c59;font-weight: bold;" th:if="${obj.orderStatus == 'XAC_NHAN'}">Cảm ơn bạn đã đặt hàng, đơn hàng của bạn đang chờ phê duyệt</h3>
+                        <h3 class="txt_18 bold mb15" style="color:#7a9c59;font-weight: bold;" th:if="${obj.orderStatus == 'DANG_GIAO'}">Cảm ơn bạn đã đặt hàng, đơn hàng của bạn đang được giao</h3>
+                        <h3 class="txt_18 bold mb15" style="color:#7a9c59;font-weight: bold;" th:if="${obj.orderStatus == 'DA_NHAN'}">Bạn đã nhận được đơn hàng, Xin vui lòng đánh giá sản phẩm</h3>
+                        <div class="ul-default" style="color: #777;font-size: 16px;">
+                            <ul>
+                                <li>Mã đơn hàng: <strong th:text="${obj.id} + 1000">4962</strong></li>
+                                <li>Tên người nhận: <strong th:text="${obj.account.fullName}"></strong></li>
+                                <li>Số điện thoại: <strong th:text="${obj.account.phone}"></strong></li>
+                                <li>Địa chỉ: <strong th:text="${obj.account.address}"></strong></li>
+                                <li>Ngày đặt hàng: <strong th:text="${obj.createdAt}"></strong></li>
+                                <li>Tổng cộng: <strong class="text-primary price" th:text="${obj.totalPrice}">260.000₫</strong></li>
+                                <li>Phương thức thanh toán: <strong>Trả tiền mặt khi nhận hàng & MIỄN PHÍ vận chuyển</strong></li>
+                                <li class="list-unstyled d-flex justify-content-between">
+                                    <button class="btn-sm btn btn-primary"><a href="/contact">Hỗ trợ</a></button>
+                                    <button class="btn btn-sm btn-warning"> <a th:href="'/cart/cancelOrder/' + ${obj.id}"> Hủy đơn </a></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>

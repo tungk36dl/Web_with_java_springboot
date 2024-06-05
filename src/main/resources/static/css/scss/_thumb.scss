@@ -1,0 +1,153 @@
+.thumb {
+    display: block;
+    overflow: hidden;
+    height: 1px;
+    position: relative;
+    width: 100%;
+    background: var(--colormain);
+
+    img,
+    video {
+        object-position: center;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+}
+
+.embed-container img {
+    object-position: center;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100% !important
+}
+
+.thumb_5x3 {
+    padding-bottom: 60%;
+}
+
+.thumb_5x4 {
+    padding-bottom: 73.3%;
+}
+
+.thumb_16x9 {
+    padding-bottom: 56.25%;
+
+    .play_video {
+        display: block;
+    }
+}
+
+.thumb-5x3 {
+    padding-bottom: 60%;
+}
+
+.thumb-5x2 {
+    padding-bottom: 40%;
+}
+
+.thumb-3x2 {
+    padding-bottom: 66.66667%;
+}
+
+.thumb-16x9 {
+    padding-bottom: 56.25%;
+}
+
+.thumb-1x1 {
+    padding-bottom: 100%;
+}
+
+.thumb-video {
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+
+    iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+
+    svg {
+        color: #fff;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+.thumb_5x5 {
+    padding-bottom: 100%;
+}
+
+.thumb_2x3 {
+    padding-bottom: 150%;
+}
+
+.icon_thumb_videophoto {
+    @extend %flexbox;
+    width: 24px;
+    display: block;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    left: 5px;
+    bottom: 5px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 700;
+    justify-content: center;
+
+    .ic {
+        align-self: center;
+        fill: #fff;
+        width: 14px;
+        height: 14px;
+    }
+}
+
+.thumb {
+    .thumb-gif {
+        width: 100%;
+        -webkit-filter: unset;
+        filter: unset;
+        -webkit-transition: opacity 1s ease-out;
+        -o-transition: opacity 1s ease-out;
+        transition: opacity 1s ease-out;
+    }
+}

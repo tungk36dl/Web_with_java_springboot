@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <link type="image/x-icon" href="http://ssl.gstatic.com/docs/doclist/images/infinite_arrow_favicon_5.ico"
+          rel="shortcut icon" />
+    <!--    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>-->
+    <!--    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.css} "/>-->
+    <!--    <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>-->
+
+    <link rel="stylesheet" href="/css/bootstrap.css" media="all" />
+    <link rel="stylesheet" href="/css/general.css" media="all" />
+
+    <link type="text/css" rel="stylesheet" href="/css/lightgallery.css" />
+    <link type="text/css" rel="stylesheet" href="/css/detail.css" />
+<!--    Summernote-->
+    <link rel="stylesheet" href="/summernote/summernote-bs4.min.css">
+
+    <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+
+
+    <!-- Summernote CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS (required by Summernote) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Summernote JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+</head>
+<body>
+
+<div class="section advertising-cooperation">
+    <div class="container">
+        <div class="tong-dai mt-2 mb-2">
+            Tổng đài: 02422635353 | 0965092353
+        </div>
+        <div class="flex-right">
+            <div class="search-pc pt-3 pb-3">
+<!--                <input type="text" class=" search-wrap-input" placeholder="Bạn muốn mua gì">-->
+<!--                <button type="submit" class=" search-box__btn">-->
+<!--                    <svg class="icon-svg">-->
+<!--                        <use xlink:href="/images/icons/icon.svg#search"></use>-->
+<!--                    </svg>-->
+<!--                </button>-->
+
+
+            </div>
+        </div>
+
+        <div th:if="${loggedInUser == null}">
+            <div class="login-user">
+                <a class="login" href="/login">Đăng nhập</a>
+                <span> | </span>
+                <a class="login" href="/register">Đăng Ký</a>
+            </div>
+        </div>
+        <div th:if="${loggedInUser != null}">
+            <div class="logout-user">
+                <p class="font-weight-bold">Xin chào,
+                    <span th:text="${loggedInUser.username}">User</span>!
+                    <a th:href="'/account/edit/' + ${loggedInUser.id}">Cập nhật thông tin</a>
+                </p>
+                <form th:action="@{/logout}" method="post">
+                    <button class="bg-success" type="submit">Đăng xuất</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:if="${loggedInUser == null}">
+    <h2 class="align-center">Vui long đăng nhập tài khoản admin để vào trang admin</h2>
+</div>
+
+<div class="container" th:if="${loggedInUser}">
+    <nav class="navbar navbar-expand-sm">
+        <!-- Brand -->
+        <a class="navbar-brand" href="/">Home</a>
+
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">Trang Chủ admin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/account">Nguoi dung</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/product">Sản Phẩm </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/category">The Loai</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/brand">Thuong hieu</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/new">TIn tuc</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/discountCode">Ma giam gia</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/order">Don hang</a>
+            </li>
+        </ul>
+    </nav>
+
+
+<!--    <div th:if="${page == 'admin-index'}">-->
+<!--        <h1 class="text-success text-center">Day la trang chu ADmin</h1>-->
+<!--    </div>-->
+
+
+    <div th:if="${page == 'admin-home'}">
+        <div th:replace="admin/admin-home.html::adminHome"></div>
+    </div>
+
+
+    <!--------------------------------------Account-->
+    <div th:if="${page == 'admin-account'}">
+        <div th:replace="admin/admin-account-list.html::adminAccountList"></div>
+    </div>
+    <div th:if="${page == 'add-account'}">
+        <div th:replace="admin/account/add-account.html::addAccount"></div>
+    </div>
+    <div th:if="${page == 'edit-account'}">
+        <div th:replace="admin/account/edit-account.html::editAccount"></div>
+    </div>
+    <div th:if="${page == 'auth-email'}">
+        <div th:replace="admin/account/auth-email.html::authEmail"></div>
+    </div>
+
+
+    <!-------------------------------Product-->
+    <div th:if="${page == 'admin-product'}">
+        <div th:replace="admin/admin-product-list.html::adminProductList"></div>
+    </div>
+    <div th:if="${page == 'add-product'}">
+        <div th:replace="admin/product/add-product.html::addProduct"></div>
+    </div>
+    <div th:if="${page == 'edit-product'}">
+        <div th:replace="admin/product/edit-product.html::editProduct"></div>
+    </div>
+            <!--    Hien thi chi tiet-->
+    <div th:if="${page == 'edit-specification'}">
+        <div th:replace="admin/specification/edit-specification.html::editSpecification"></div>
+    </div>
+
+    <!-- ------------ Category--------------- -->
+    <div th:if="${page == 'admin-category'}">
+        <div th:replace="admin/admin-category-list.html::adminCategoryList"></div>
+    </div>
+    <div th:if="${page == 'add-category'}">
+        <div th:replace="admin/category/add-category.html::addCategory"></div>
+    </div>
+
+    <div th:if="${page == 'edit-category'}">
+        <div th:replace="admin/category/edit-category.html::editCategory"></div>
+    </div>
+
+    <!-- ------------ Brand--------------- -->
+    <div th:if="${page == 'admin-brand'}">
+        <div th:replace="admin/admin-brand-list.html::adminBrandList"></div>
+    </div>
+    <div th:if="${page == 'add-brand'}">
+        <div th:replace="admin/brand/add-brand.html::addBrand"></div>
+    </div>
+
+    <div th:if="${page == 'edit-brand'}">
+        <div th:replace="admin/brand/edit-brand.html::editBrand"></div>
+    </div>
+
+    <!--New-->
+    <div th:if="${page == 'admin-new'}">
+        <div th:replace="admin/admin-new-list.html::adminNewList"></div>
+    </div>
+    <div th:if="${page == 'add-new'}">
+        <div th:replace="admin/new/add-new.html::addNew"></div>
+    </div>
+    <div th:if="${page == 'edit-new'}">
+        <div th:replace="admin/new/edit-new.html::editNew"></div>
+    </div>
+
+
+<!--    Ma giam gia-->
+    <div th:if="${page == 'admin-discountCode'}">
+        <div th:replace="admin/admin-discount-code-list.html::adminDiscountCodeList"></div>
+    </div>
+    <div th:if="${page == 'add-discountCode'}">
+        <div th:replace="admin/discountCode/add-discount-code.html::addDiscountCode"></div>
+    </div>
+    <div th:if="${page == 'edit-discountCode'}">
+        <div th:replace="admin/discountCode/edit-discount-code.html::editDiscountCode"></div>
+    </div>
+
+<!--    Don hang-->
+    <div th:if="${page == 'admin-order'}">
+        <div th:replace="admin/order/admin-order-list.html::adminOrderList"></div>
+    </div>
+    <div th:if="${page == 'edit-order'}">
+        <div th:replace="admin/order/edit-order.html::editOrder"></div>
+    </div>
+    <div th:if="${page == 'admin-cancel-order'}">
+        <div th:replace="admin/order/cancel-order.html::adminCancelOrderList"></div>
+    </div>
+
+
+
+</div>
+
+<script>
+    // Function to format numbers
+    function formatCurrency(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    }
+
+    // Format all price elements with class 'price'
+    document.addEventListener("DOMContentLoaded", function() {
+        const priceElements = document.querySelectorAll('.price');
+        priceElements.forEach(function(el) {
+            let value = parseFloat(el.innerText.replace(/[^0-9.-]+/g,""));
+            el.innerText = formatCurrency(value) + '₫';
+        });
+
+
+    });
+</script>
+
+<!-- Summernote -->
+<script src="/summernote/summernote-bs4.min.js"></script>
+
+<!-- jQuery -->
+<script src="/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/jquery-ui/jquery-ui.min.js"></script>
+</body>
+</html>

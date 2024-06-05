@@ -1,0 +1,151 @@
+<div class="container" th:fragment="editSpecification">
+    <div class="">
+        <div class="row">
+            <div class="col-md-8 mx-auto rounded border p-4 m-4">
+                <div th:if="${specification == null}" class="alert alert-danger">
+                    <h3>Sản phẩm chưa thêm thông số kỹ thuật</h3>
+                </div>
+
+                <h1> Sửa Thông Số Kỹ Thuật</h1>
+                <form method="POST" th:object="${specification}" th:action="@{/admin/product/specification/{productId}(productId=${productId})}">
+                    <input type="hidden" name="id" th:field="*{id}">
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Hệ điều hành</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập hệ điều hành..." th:field="*{operatingSystem}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Ngôn ngữ</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập ngôn ngữ..." th:field="*{language}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Màn hình</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông số màn hình..." th:field="*{screen}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Camera sau</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông số camera sau..." th:field="*{rearCamera}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Camera trước</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông số camera trước..." th:field="*{frontCamera}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Chụp ảnh nâng cao</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập các tính năng chụp ảnh nâng cao..." th:field="*{advancedPhotography}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Quay phim</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập các chế độ quay phim..." th:field="*{videoRecording}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Chipset (CPU)</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông số chipset..." th:field="*{chipset}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">RAM</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập dung lượng RAM..." th:field="*{ram}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Bộ nhớ</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập dung lượng bộ nhớ..." th:field="*{memory}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Thẻ nhớ ngoài</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông tin thẻ nhớ ngoài..." th:field="*{externalMemory}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Kích thước</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập kích thước..." th:field="*{dimensions}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Trọng lượng (g)</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập trọng lượng..." th:field="*{weight}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Dung lượng pin</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập dung lượng pin..." th:field="*{batteryCapacity}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Mạng di động</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông tin mạng di động..." th:field="*{mobileNetwork}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">SIM</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông tin SIM..." th:field="*{sim}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Wifi</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông tin Wifi..." th:field="*{wifi}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Sạc</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nhập thông tin sạc..." th:field="*{charging}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="offset-sm-4 col-sm-4 d-grid">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-sm-4 d-grid">
+                            <a href="/admin/product" role="button" class="btn btn-outline-primary">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

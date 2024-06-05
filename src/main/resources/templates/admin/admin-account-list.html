@@ -1,0 +1,53 @@
+<div th:fragment="adminAccountList">
+
+    <div th:if="${messageDelete}">
+        <h3 class="alert alert-success" th:text="${messageDelete}"></h3>
+    </div>
+    <h4> List account </h4>
+
+    <form action="/admin/account/search" method="GET" class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2"  name="data" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <a class="btn btn-primary mt-3 mb-3" href="/admin/account/add">Thêm nguoi dung</a>
+
+    <!-- Hiển thị flash message -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <table class="table table-bordered ">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Created_at</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obj : ${accounts}">
+            <td th:text="${obj.id}">id</td>
+            <td th:text="${obj.username}">username</td>
+            <td th:text="${obj.email}">email</td>
+            <td th:text="${obj.createdAt}">createAt</td>
+
+            <td style="white-space: nowrap">
+                <a class="btn btn-warning btn-sm"  th:href="${'/admin/account/edit/' + obj.id}">Edit</a>
+                <a class="btn btn-danger btn-sm" th:href="${'/admin/account/delete/' + obj.id}" onclick="return confirm('Are you sure?')" >Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example" class="justify-content-end">
+        <ul class="pagination justify-content-end">
+            <li class="page-item" th:if="${currentPage > 0}"><a class="page-link" th:href="${'/admin/account?page=' + (currentPage - 1)}">Previous</a></li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPage)}"><a class="page-link" th:href="${'/admin/account?page=' + (i - 1)}" th:text="${i}">1</a></li>
+            <li class="page-item" th:if="${currentPage < (totalPage - 1)}"><a class="page-link" th:href="${'/admin/account?page=' + (currentPage + 1)}">Next</a></li>
+        </ul>
+    </nav>
+</div>

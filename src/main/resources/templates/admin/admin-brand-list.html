@@ -1,0 +1,34 @@
+<div th:fragment="adminBrandList">
+    <h4> List Brand </h4>
+
+    <a class="btn btn-primary m-3" href="/admin/brand/add">Add Brand</a>
+
+
+    <h3 class="p-2 text-center alert alert-danger" th:if="${result == 'false'}"> Xoa brand that bai </h3>
+    <h3 class="p-2 text-center alert alert-success" th:if="${result == 'true'}"> Xoa brand thanh cong </h3>
+    <!-- Hiển thị flash message -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <table class="table table-bordered ">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Brand Name</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obj : ${brands}">
+            <td th:text="${obj.id}">id</td>
+            <td th:text="${obj.brandName}">brandName</td>
+
+            <td style="white-space: nowrap">
+                <a class="btn btn-warning btn-sm" th:href="${'/admin/brand/edit/' + obj.id}">Edit</a>
+                <a class="btn btn-danger btn-sm"  th:href="${'/admin/brand/delete/' + obj.id}" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

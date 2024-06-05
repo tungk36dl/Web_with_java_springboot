@@ -1,0 +1,60 @@
+<div th:fragment="adminOrderList">
+    <h4> List Order </h4>
+
+    <div class="row d-flex justify-content-between">
+        <a style="display: none" class="col-3 btn btn-primary m-3" href="/admin/order/add">Add Order</a>
+        <a class="col-3 btn btn-warning m-3" href="/admin/cancelOrder">Đơn bị hủy</a>
+    </div>
+
+
+    <h3 class="p-2 text-center alert alert-danger" th:if="${result == 'false'}"> Xoa don hang that bai </h3>
+    <h3 class="p-2 text-center alert alert-success" th:if="${result == 'true'}"> Xoa don hang thanh cong </h3>
+    <!-- Hiển thị flash message -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <table class="table table-bordered ">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nguoi nhan</th>
+            <th>So dien thoai</th>
+            <th>Dia chi</th>
+            <th>San pham trong don</th>
+            <th>Tong tien don hang</th>
+            <th>Ghi chu</th>
+            <th>Trang thai</th>
+            <th>Thoi gian</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obj : ${orders}">
+            <td th:text="${obj.id}">id</td>
+            <td th:text="${obj.account.fullName}">fullname</td>
+            <td th:text="${obj.account.phone}">phone</td>
+            <td th:text="${obj.account.address}">address</td>
+            <td>
+                <ul th:if="${obj.cartItems != null}">
+                    <li th:each="item : ${obj.cartItems}">
+                        <span  th:text="${item.product.productName}"></span>
+                        <span>: (Sl) </span>
+                        <span th:text="${item.quantity}"></span>
+                    </li>
+                </ul>
+                <span th:if="${obj.cartItems == null}">No items</span>
+            </td>
+            <td class="price" th:text="${obj.totalPrice}"></td>
+            <td th:text="${obj.note}">note</td>
+            <td th:text="${obj.orderStatus}">status</td>
+            <td th:text="${obj.createdAt}">status</td>
+
+            <td style="white-space: nowrap">
+                <a class="btn btn-warning btn-sm" th:href="${'/admin/order/edit/' + obj.id}">Edit</a>
+                <a class="btn btn-danger btn-sm"  th:href="${'/admin/order/delete/' + obj.id}" onclick="return confirm('Are you sure?')">Hủy đơn</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

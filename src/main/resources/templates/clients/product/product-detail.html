@@ -1,0 +1,410 @@
+<div th:fragment="ProductDetail">
+
+
+<!--    <div class="container">-->
+<!--        <h3>Product detail</h3>-->
+
+<!--        <div class="row mt-5">-->
+<!--            <div class="col-6">-->
+<!--                <img th:src="'/images/products/' + ${product.image != null ? product.image : 'cat1.jpg'}" class="img-fluid">-->
+<!--            </div>-->
+<!--            <div class="col-6">-->
+<!--                <div class="ml-3">-->
+<!--                    <h2 class="text-success" th:text="${product.productName}"></h2>-->
+<!--                    <h3 th:text="${product.price} + 'đ'"> </h3>-->
+
+<!--                    <div class="mt-5">-->
+<!--                        <p th:text="${product.description}"></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+    <!-- Hiển thị thông báo thành công thêm san pham nếu có -->
+    <div th:if="${messageAddToCart}" class="alert alert-success m-3">
+        <p th:text="${messageAddToCart}"></p>
+        <script>
+            // alert('Thêm sản phẩm vào giỏ hàng thành công');
+        </script>
+    </div>
+
+
+
+
+    <section class="product_detail container clearfix fixed-height mb24" th:object="${product}" >
+        <h1 class="title_name d-md-none" th:text="${product.productName}" ></h1>
+        <div class="product-info row mb20">
+
+            <div class="col_left col-md-6">
+                <div class="PD_Media">
+                    <div id="lightgallery" class="lightgallery swiper-container gallery-top">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide item" th:if="${product.image != null}" th:data-src="@{/images/products/{image}(image=${product.image})}"
+                                 data-sub-html="<p>Main Image</p>">
+                                <div class="swiper-slide-container">
+                                    <div class="ava">
+                                        <img class="zoom_01" th:src="@{/images/products/{image}(image=${product.image})}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide item" th:each="image : ${product.images}" th:data-src="@{/images/products/{image}(image=${image})}"
+                                 data-sub-html="<p>Additional Image</p>">
+                                <div class="swiper-slide-container">
+                                    <div class="ava">
+                                        <img th:src="@{/images/products/{image}(image=${image})}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-container gallery-thumbs">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:if="${product.image != null}">
+                                <div class="swiper-slide-container">
+                                    <img th:src="@{/images/products/{image}(image=${product.image})}" alt="">
+                                </div>
+                            </div>
+                            <div class="swiper-slide" th:each="image : ${product.images}">
+                                <div class="swiper-slide-container">
+                                    <img th:src="@{/images/products/{image}(image=${image})}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-button-next">
+                            <svg class="flickity-button-icon" viewBox="0 0 100 100">
+                                <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path>
+                            </svg>
+                        </div>
+                        <div class="swiper-button-prev">
+                            <svg class="flickity-button-icon" viewBox="0 0 100 100">
+                                <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 tt_sp_chitiet">
+                <h1 class="title_name d-md-block d-none" th:text="${product.productName}"></h1>
+                <div class="sidebar_1_head flex">
+                    <div class="ct_star">
+                        <svg class="icon-svg">
+                            <use xlink:href="/images/icons/icon.svg#star-full"></use>
+                        </svg>
+                        <svg class="icon-svg">
+                            <use xlink:href="/images/icons/icon.svg#star-full"></use>
+                        </svg>
+                        <svg class="icon-svg">
+                            <use xlink:href="/images/icons/icon.svg#star-full"></use>
+                        </svg>
+                        <svg class="icon-svg">
+                            <use xlink:href="/images/icons/icon.svg#star-full"></use>
+                        </svg>
+                        <svg class="icon-svg not">
+                            <use xlink:href="/images/icons/icon.svg#star-none"></use>
+                        </svg>
+                    </div>
+                    <div class="ct_danhgia">
+                        <a href="">(Xem 100 đánh giá)</a> 3500 đã mua
+                    </div>
+                </div>
+                <div class="ct_price">
+                    <div class="price-old">
+<!--                        Giá gốc: <span>30.000.000 đ</span> <strong>Giảm 20%</strong>-->
+                    </div>
+                    Giá về tay:
+                    <div class="" >
+                        <h2 class="fw-bold fs-5">
+                            <strong class="price" th:text="${product.price}"> 26.450.000 đ</strong>
+
+                        </h2>
+                    </div>
+                </div>
+                <div class="description">
+<!--                    <p>Toner mới bổ sung DNA, khả năng cấp ẩm rõ rệt hơn gấp 3 lần. Và đặc biệt có khả năng hỗ trợ phục hồi lớp màng bảo vệ da. Nên da tổn thương do mụn dùng rất tốt.</p>-->
+<!--                    <p>Dung tích: 150 ml</p>-->
+<!--                    <p>Sản xuất tại Việt Nam – Công nghệ Bulgaria</p>-->
+<!--                    <p>Tặng kèm máy Nano phun sương Laco trị giá 150K</p>-->
+                </div>
+                <div>
+                    Số lượng : <span th:text=" ${product.quantity}"></span>
+                </div>
+                <form action="/product/add-to-cart" id="submitAddToCart" method="POST">
+                <div class="ct_quantity">
+                    <div class="input-group">
+
+                       <span class="input-group-btn">
+                        <button type="button" class="myQuantity-left-minus btn  btn-number"  data-type="minus" data-field="">
+                            <svg class="icon-svg">
+                                <use xlink:href="/images/icons/icon.svg#Minus"></use>
+                            </svg>
+                        </button>
+                    </span>
+                        <input type="hidden" name="productId" th:value="${product.id}" />
+
+                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                       <span class="input-group-btn">
+                        <button type="button" class="myQuantity-right-plus btn btn-number" data-type="plus" data-field="">
+                            <svg class="icon-svg">
+                                <use xlink:href="/images/icons/icon.svg#Plus"></use>
+                            </svg>
+                        </button>
+                    </span>
+
+                        <p></p>
+                        <input type="hidden" id="quantityCheck" name="quantity" th:value="${product.quantity}">
+
+                        <button type="button" id="buttonSubmitAddToCart" name="add-to-cart" value="3333" class="single_add_to_cart_button btn-green btn mt-1">Thêm vào giỏ hàng</button>
+
+                    </div>
+                </div>
+                </form>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var quantityInput = document.getElementById('quantity');
+                        var quantityCheck = document.getElementById('quantityCheck').value;
+                        var submitAddToCart = document.getElementById('submitAddToCart');
+                        var quantityMinusBtn = document.querySelector('.myQuantity-left-minus');
+                        var quantityPlusBtn = document.querySelector('.myQuantity-right-plus');
+
+                        quantityMinusBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            var quantity = parseInt(quantityInput.value);
+                            if (quantity > 1) {
+                                quantityInput.value = quantity - 1;
+                            }
+                        });
+
+                        quantityPlusBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            var quantity = parseInt(quantityInput.value);
+                            var maxQuantity = parseInt(quantityInput.getAttribute('max'));
+                            if (quantity < maxQuantity) {
+                                quantityInput.value = quantity + 1;
+                            }
+                        });
+
+                        document.getElementById('buttonSubmitAddToCart').addEventListener('click', function() {
+                            var quantity = parseInt(quantityInput.value);
+                            if (quantity > quantityCheck) {
+                                alert("Số lượng sản phẩm bị vượt quá giới hạn")
+                            } else {
+                                submitAddToCart.submit();
+                            }
+                        });
+                    });
+                </script>
+
+                <div class="product_meta">
+                    <span class="sku_wrapper">Mã: <span class="sku">8938515080458</span></span>
+                    <span class="posted_in">Danh mục: <a th:href="'/product/' + ${product.category.brand.brandName}" rel="tag" th:text="${product.category.brand.brandName}"></a></span>
+                </div>
+                <div class="product_social">
+                    <a href="">
+                        <svg class="icon-svg">
+                            <use xlink:href="/images/icons/icon.svg#Facebook"></use>
+                        </svg>
+                    </a>
+                    <a href="">
+                        <svg class="icon-svg">
+                            <use xlink:href="images/icons/icon.svg#Twitter"></use>
+                        </svg>
+                    </a>
+                    <a href="">
+                        <svg class="icon-svg">
+                            <use xlink:href="images/icons/icon.svg#twitter2"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="product-content">
+            <div class="product-section">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <h5 class="title uppercase medium">Mô tả</h5>
+                    </div>
+                    <div class="col-lg-10">
+                        <table class="table table-bordered">
+                            <thead class="bg-secondary text-white">
+                            <tr>
+                                <th colspan="2" class="text-center">Thông tin chung</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Hệ điều hành:</th>
+                                <td th:text="${specification.operatingSystem}">Android 14</td>
+                            </tr>
+                            <tr>
+                                <th>Ngôn ngữ:</th>
+                                <td th:text="${specification.language}">Tiếng Việt</td>
+                            </tr>
+                            </tbody>
+
+                            <thead class="bg-secondary text-white">
+                            <tr>
+                                <th colspan="2" class="text-center">Màn hình</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Màn hình:</th>
+                                <td th:text="${specification.screen}">Dynamic AMOLED 2X 6,8 inches 2K+ (1440 x 3088 Pixels)</td>
+                            </tr>
+                            </tbody>
+
+                            <thead class="bg-secondary text-white">
+                            <tr>
+                                <th colspan="2" class="text-center">Chụp hình & Quay phim</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Camera sau:</th>
+                                <td th:text="${specification.rearCamera}">Chính 200 MP & Phụ 50 MP, 12 MP, 10 MP</td>
+                            </tr>
+                            <tr>
+                                <th>Camera trước:</th>
+                                <td th:text="${specification.frontCamera}">12MP</td>
+                            </tr>
+                            <tr>
+                                <th>Chụp ảnh nâng cao:</th>
+                                <td th:text="${specification.advancedPhotography}">Ảnh Raw, Zoom quang học, Zoom kỹ thuật số, Xóa phông, Video chân dung, Video chuyên nghiệp, Tự động lấy nét (AF), Trôi nhanh thời gian (Time Lapse), Toàn cảnh (Panorama), Super HDR, Siêu độ phân giải, Quét mã QR, Quay video hiển thị kép, Quay Siêu chậm (S)</td>
+                            </tr>
+                            <tr>
+                                <th>Quay phim:</th>
+                                <td th:text="${specification.videoRecording}">HD 720p@30fps, FullHD 1080p@60fps, FullHD 1080p@30fps, FullHD 1080p@240fps, FullHD 1080p@120fps, 8K 4320p@30fps, 4K 2160p@60fps, 4K 2160p@30fps, 4K 2160p@120fps</td>
+                            </tr>
+                            </tbody>
+
+                            <thead class="bg-secondary text-white">
+                            <tr>
+                                <th colspan="2" class="text-center">CPU & RAM</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Chipset (CPU):</th>
+                                <td th:text="${specification.chipset}">Snapdragon 8 Gen 3</td>
+                            </tr>
+                            <tr>
+                                <th>RAM:</th>
+                                <td th:text="${specification.ram}">12G</td>
+                            </tr>
+                            </tbody>
+
+                            <thead class="bg-secondary text-white">
+                            <tr>
+                                <th colspan="2" class="text-center">Bộ nhớ & Lưu trữ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Bộ nhớ:</th>
+                                <td th:text="${specification.memory}">256G/512G</td>
+                            </tr>
+                            <tr>
+                                <th>Thẻ nhớ ngoài:</th>
+                                <td th:text="${specification.externalMemory}">Không hỗ trợ</td>
+                            </tr>
+                            </tbody>
+
+                            <thead class="bg-secondary text-white">
+                            <tr>
+                                <th colspan="2" class="text-center">Thiết kế & Trọng lượng</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Kích thước:</th>
+                                <td th:text="${specification.dimensions}">163.3 x 77.9 x 8.9 mm</td>
+                            </tr>
+                            <tr>
+                                <th>Trọng lượng (g):</th>
+                                <td th:text="${specification.weight}">Nặng 228 g</td>
+                            </tr>
+                            </tbody>
+
+                            <thead class="bg-secondary text-white">
+                            <tr>
+                                <th colspan="2" class="text-center">Thông tin pin</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Dung lượng pin:</th>
+                                <td th:text="${specification.batteryCapacity}">5000 mAh</td>
+                            </tr>
+                            </tbody>
+
+                            <thead class="bg-secondary text-white">
+                            <tr>
+                                <th colspan="2" class="text-center">Kết nối & Cổng giao tiếp</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Mạng di động:</th>
+                                <td th:text="${specification.mobileNetwork}">2G/3G/4G/5G</td>
+                            </tr>
+                            <tr>
+                                <th>SIM:</th>
+                                <td th:text="${specification.sim}">2 Sim (esim + sim vật lý)</td>
+                            </tr>
+                            <tr>
+                                <th>Wifi:</th>
+                                <td th:text="${specification.wifi}">Wi-Fi 802.11 a/b/g/n/ac/6, dual-band, Wi-Fi Direct, hotspot</td>
+                            </tr>
+                            <tr>
+                                <th>Sạc:</th>
+                                <td th:text="${specification.charging}">Sạc nhanh 45W</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="list-product list-product_new">
+            <div class="title-main">
+                <span>SẢN PHẨM TƯƠNG TỰ</span>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-6 mb20" th:each="obj : ${products}">
+                    <div class="product-small">
+                        <div class="gift-sale">
+                            <div class="sale">-5%</div>
+                            <div class="code">Quà tặng 600K</div>
+                        </div>
+                        <div class="box-image">
+                            <div class="box-image">
+                                <a th:href="'/product/' + ${obj.id}">
+                                    <img th:src="'/images/products/' + ${obj.image}">
+                                </a>
+                            </div>
+                            <div class="box-text">
+                                <!--                                    <div class="note" >SẢN PHẨM CHĂM SÓC DA MAROSA</div>-->
+                                <h3><a class="fw-bold fs-lg" th:href="'/product/' + ${obj.id}" th:text="${obj.productName}"></a></h3>
+                                <div class="ct_star">
+
+                                </div>
+                                <div class="">
+                                    <!--                                        <div class="old">480.000 đ</div>-->
+                                    <div class="new " ><strong class="price" th:text="${obj.price}"></strong></div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </section>
+
+</div>

@@ -1,0 +1,32 @@
+<div th:fragment="AccountList">
+
+    <h4> List account </h4>
+
+    <p th:each="obj : ${accounts}" th:if="${obj.id}<2">
+        Username: <span th:text="${obj.username}"></span> <br>
+        Password: <span th:text="${obj.password}"></span><br>
+        Email: <span th:text="${obj.email}"></span> <br>
+    </p>
+
+    <table class="table table-bordered ">
+       <thead>
+           <tr>
+               <td>Id</td>
+               <td>Username</td>
+               <td>Email</td>
+               <td>Created_at</td>
+           </tr>
+       </thead>
+        <tbody>
+            <tr th:each="obj : ${accounts}">
+                <td th:text="${obj.id}">id</td>
+                <td th:text="${obj.username}">username</td>
+                <td th:text="${obj.email}">email</td>
+                <td th:text="${obj.createdAt}">createAt</td>
+
+                <td><a th:href="${'/account/edit/' + obj.id}">Delete</a></td>
+                <td><a th:href="${'/account/delete/' + obj.id}">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

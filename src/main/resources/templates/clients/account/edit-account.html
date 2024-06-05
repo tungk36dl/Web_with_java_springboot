@@ -1,0 +1,140 @@
+<div th:fragment="editAccount">
+    <div class="container" th:fragment="editAccount">
+        <div class="row">
+            <div class="col-md-8 mx-auto rounded border p-4 m-4">
+                <h1>Sửa người dùng</h1>
+                <form method="POST" enctype="multipart/form-data" id="submit-account" th:object="${account}" action="/account/edit">
+                    <input type="hidden" name="id" th:value="${account.id}">
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Username</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="username" placeholder="Nhập username..." th:field="*{username}" >
+                            <div id="errorUsername" class="text-danger"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" name="email" placeholder="Nhập email..." th:field="*{email}">
+                            <div id="errorEmail" class="text-danger"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" id="password" class="form-control" name="password" placeholder="Nhập password..." th:field="*{password}">
+                            <div class="text-danger errorPassword"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">RePassword</label>
+                        <div class="col-sm-8">
+                            <input type="password" id="rePassword" class="form-control" name="rePassword" placeholder="Nhập lại password...">
+                            <div class="text-danger errorRePassword"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Full Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="fullName" placeholder="Nhập tên đầy đủ..." th:field="*{fullName}">
+                            <div class="text-danger errorFullName"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Phone</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="phone" placeholder="Nhập số điện thoại..." th:field="*{phone}">
+                            <div class="text-danger errorPhone"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 form-group">
+                        <label class="col-sm-4 col-form-label">Address</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="address" placeholder="Nhập địa chỉ..." th:field="*{address}">
+                            <div class="text-danger errorAddress"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-sm-4 col-sm-4 d-grid">
+                            <button type="button" id="btnSave" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-sm-4 d-grid">
+                            <a href="/" role="button" class="btn btn-outline-primary">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#btnSave").click(function () {
+                let username = $("input[name='username']").val();
+                let email = $("input[name='email']").val();
+                let password = $("#password").val();
+                let rePassword = $("#rePassword").val();
+                let submitAccount = $("#submit-account");
+                let errorPassword = $(".errorPassword");
+                let errorRePassword = $(".errorRePassword");
+                let errorUsername = $("#errorUsername");
+                let errorEmail = $("#errorEmail");
+                let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                let strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+                errorPassword.hide();
+                errorRePassword.hide();
+                errorUsername.hide();
+                errorEmail.hide();
+
+                if (username == "") {
+                    errorUsername.html("Username không được để trống.");
+                    errorUsername.show();
+                    return;
+                }
+
+                if (email === "") {
+                    errorEmail.html("Email không được để trống.");
+                    errorEmail.show();
+                    return;
+                }
+
+                if (!emailPattern.test(email)) {
+                    errorEmail.html("Email không hợp lệ.");
+                    errorEmail.show();
+                    return;
+                }
+
+                if (password === "") {
+                    errorPassword.html("Password không được để trống.");
+                    errorPassword.show();
+                    return;
+                }
+
+                if (password.length < 8) {
+                    errorPassword.html("Password phải có ít nhất 8 ký tự.");
+                    errorPassword.show();
+                    return;
+                }
+
+                if (!strongPasswordPattern.test(password)) {
+                    errorPassword.html("Password phải bao gồm ít nhất một chữ hoa, một chữ thường, một số và một ký tự đặc biệt.");
+                    errorPassword.show();
+                    return;
+                }
+
+                if (password !== rePassword) {
+                    errorRePassword.html("Nhập lại password không khớp.");
+                    errorRePassword.show();
+                    return;
+                }
+
+                submitAccount.submit();
+            });
+        });
+    </script>
+
+
+</div>

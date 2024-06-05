@@ -1,0 +1,45 @@
+<div  th:fragment="editOrder">
+    <div class="container">
+        <h2>Edit Order</h2>
+
+        <!-- Hiển thị flash message -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <span th:text="${successMessage}"></span>
+        </div>
+
+        <form th:object="${order}" th:action="@{/admin/order/edit}" method="post">
+            <div class="form-group">
+                <label for="id">Order ID</label>
+                <input type="text" id="id" name="id" th:field="*{id}" class="form-control" readonly="readonly"/>
+            </div>
+            <div class="form-group">
+                <label for="account">Account</label>
+                <input type="text" id="account" th:value="${order.account.fullName}" class="form-control" readonly="readonly"/>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" th:value="${order.account.phone}" class="form-control" readonly="readonly"/>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" th:value="${order.account.address}" class="form-control" readonly="readonly"/>
+            </div>
+            <div class="form-group">
+                <label for="note">Note</label>
+                <textarea id="note" th:field="*{note}" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="orderStatus">Order Status</label>
+                <select id="orderStatus" th:field="*{orderStatus}" class="form-control">
+                    <option th:each="status : ${orderStatuses}" th:value="${status}" th:text="${status}"></option>
+                </select>
+            </div>
+<!--            <div class="form-group">-->
+<!--                <label for="totalPrice">Total Price</label>-->
+<!--                <input type="number" id="totalPrice" th:field="*{totalPrice}" class="form-control"/>-->
+<!--            </div>-->
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/admin/order/list" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

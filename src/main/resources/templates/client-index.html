@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="" />
+    <meta name="description" content="">
+    <meta name="keywords" content=" Việt Nam">
+    <title>
+        Thương mại điện tử Laco
+
+    </title>
+    <link type="image/x-icon" href="http://ssl.gstatic.com/docs/doclist/images/infinite_arrow_favicon_5.ico"
+          rel="shortcut icon" />
+<!--    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>-->
+<!--    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.css} "/>-->
+<!--    <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>-->
+
+    <link rel="stylesheet" href="/css/bootstrap.css" media="all" />
+    <link rel="stylesheet" href="/css/general.css" media="all" />
+
+    <link type="text/css" rel="stylesheet" href="/css/lightgallery.css" />
+    <link type="text/css" rel="stylesheet" href="/css/detail.css" />
+
+
+
+    <!-- build:head -->
+</head>
+
+<body class="homepage">
+<header class="header has-sticky sticky-jump">
+    <section class="header-wrapper clearfix">
+        <div class="section advertising-cooperation">
+            <div class="container">
+                <div class="tong-dai mt-2 mb-2">
+                    Tổng đài: 02422635353 | 0965092353
+                </div>
+                <div class="flex-right">
+                    <div class="search-pc pt-3 pb-3">
+<!--                        <input type="text" class=" search-wrap-input" placeholder="Bạn muốn mua gì">-->
+<!--                        <button type="submit" class=" search-box__btn">-->
+<!--                            <svg class="icon-svg">-->
+<!--                                <use xlink:href="/images/icons/icon.svg#search"></use>-->
+<!--                            </svg>-->
+<!--                        </button>-->
+
+
+                    </div>
+                </div>
+
+                <div th:if="${loggedInUser == null}">
+                    <div class="login-user">
+                        <a class="login" href="/login">Đăng nhập</a>
+                    <span> | </span>
+                        <a class="login" href="/register">Đăng Ký</a>
+                    </div>
+                </div>
+                <div th:if="${loggedInUser != null}">
+                    <div class="logout-user">
+                        <p class="font-weight-bold">Xin chào,
+                            <span th:text="${loggedInUser.username}">User</span>!
+                            <span> | </span>
+                            <a th:href="'/account/edit/' + ${loggedInUser.id}">Cập nhật thông tin</a>
+                        </p>
+                        <form th:action="@{/logout}" method="post">
+                            <button class="bg-success" type="submit">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section header-main">
+            <div class="container flex">
+                <a href="javascript:;" class="all-menu all-menu-tablet"><span class="hamburger"></span></a>
+                <h1 class="logo"><img th:src="@{/images/graphics/Laco.png}" /></h1>
+                <div class="row service">
+                    <div class="col-4 col-inner">
+                        <div class="icon"><img src="/images/graphics/giao-hang-toan-quoc.png" /></div>
+                        <div class="icon-box-text">
+                            <h3>Giao hàng Toàn Quốc</h3>
+                            <p>Giao hàng Miễn Phí</p>
+                        </div>
+                    </div>
+                    <div class="col-4 col-inner">
+                        <div class="icon"><img src="/images/graphics/tu-van-mien-phi.png" /></div>
+                        <div class="icon-box-text">
+                            <h3>0965092353</h3>
+                            <p>Hỗ trợ tư vấn 24/7</p>
+                        </div>
+                    </div>
+                    <div class="col-4 col-inner">
+                        <div class="icon"><img src="/images/graphics/thanh-toan-khi-nhan-hang.png" /></div>
+                        <div class="icon-box-text">
+                            <h3>Thanh toán dễ dàng</h3>
+                            <p>Thanh toán khi nhận hàng</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gio-hang">
+                    <a th:if="${loggedInUser != null}" href="/cart" class="cart-link">
+                        <span class="cart-title">
+                        Giỏ hàng / <span class="cart-price">3</span>
+                    </span>
+                        <svg class="icon-svg">
+                            <use xlink:href="/images/icons/icon.svg#cart"></use>
+                        </svg>
+                    </a>
+
+                    <a th:if="${loggedInUser == null}" href="/login" class="cart-link alert-login">
+                        <span class="cart-title">
+                        Giỏ hàng
+                    </span>
+                        <svg class="icon-svg">
+                            <use xlink:href="/images/icons/icon.svg#cart"></use>
+                        </svg>
+                    </a>
+
+                    <script>
+                        const alertLoginLink = document.querySelector('.alert-login');
+
+                        alertLoginLink.addEventListener('click', function(event) {
+                            event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ "a"
+                            alert('Bạn cần đăng nhập để đi tới trang giỏ hàng!');
+                        });
+                    </script>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div id="wrap-main-nav" class="section wrap-main-nav">
+            <div class="container flex">
+                <nav class="main-nav">
+                    <div class="search-pc">
+                        <input type="text" class="search-wrap-input" placeholder="Bạn muốn mua gì">
+                        <button type="submit" class="search-box__btn">
+                            <svg class="icon-svg">
+                                <use xlink:href="/images/icons/icon.svg#search"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <ul class="parent">
+                        <li class="active">
+                            <a href="/" title="">Trang chủ</a>
+                        </li>
+
+                        <li>
+                            <a href="/product" title="">Sản phẩm</a>
+                            <span class="sub-icon">+</span>
+                            <ul class="level2">
+                                <li th:each="brand : ${brands}">
+                                    <a th:href="${'/product/list/' + brand.brandName}" th:text="${brand.brandName}"></a>
+                                    <span class="sub-icon2">+</span>
+                                    <ul class="level3">
+                                        <li th:each="category : ${brand.categories}">
+                                            <a th:href="${'/product/list/' + brand.brandName + '/' + category.id}" th:text="${category.categoryName}"></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="/new" title="">Tin tức</a>
+                        </li>
+                        <li>
+                            <a href="/contact" title="">Liên hệ</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</header>
+
+
+
+<!--<nav class="navbar navbar-expand-sm">-->
+<!--    &lt;!&ndash; Brand &ndash;&gt;-->
+<!--    <a class="navbar-brand" href="#">Logo</a>-->
+
+<!--    &lt;!&ndash; Links &ndash;&gt;-->
+<!--    <ul class="navbar-nav">-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="/">Trang Chủ</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="/product">Sản Phẩm</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="/contact">Lien he</a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</nav>-->
+<div th:if="${page == 'client-index'}">
+    <div th:replace="clients/client-home.html::ClientHome"></div>
+</div>
+<div th:if="${page == 'edit-account'}">
+    <div th:replace="clients/account/edit-account.html::editAccount"></div>
+</div>
+
+<div th:if="${page == 'product-list-client'}">
+    <div th:replace="clients/product/product-list-client.html::ProductListClient">
+    </div>
+</div>
+<div th:if="${page == 'new-list-client'}">
+    <div th:replace="clients/new/new-list-client.html::NewListClient"></div>
+</div>
+<div th:if="${page == 'new-detail'}">
+    <div th:replace="clients/new/new-detail.html::NewDetail"></div>
+</div>
+
+<div th:if="${page == 'client-contact'}">
+    <div th:replace="clients/client-contact.html::ClientContact"></div>
+</div>
+
+<div th:if="${page == 'client-cart'}">
+    <div th:replace="clients/client-cart.html::ClientCart"></div>
+</div>
+
+<div th:if="${page == 'product-detail'}">
+    <div th:replace="clients/product/product-detail.html::ProductDetail"></div>
+</div>
+
+
+
+
+<!--Footer-->
+<!--<footer class="footer clearfix" style="background-color: rgba(134, 183, 50, 0.7);">-->
+<footer class="footer clearfix" style="">
+<!--    <div class="container">-->
+<!--        <div class="widget-title"><span>Thương mại điện tử Laco</span></div>-->
+<!--        <div class="text-center mb30">-->
+<!--            <img src="images/graphics/logo-white.png">-->
+<!--        </div>-->
+<!--        <div class="text-center mb30">-->
+<!--            Điện thoại: 02422635353 / 0965092353<br>-->
+<!--            Địa chỉ kho hàng: Tòa B6A KĐT Nam Trung Yên, Cầu Giấy, Hà Nội<br>-->
+<!--            Liên kết nhanh: <a href="https://laco.vn/san-pham/may-rua-mat-laco-luxury/">Iphone 14 Pro Max</a>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="don-vi">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb20">
+                    <div class="widget-title"><span>ĐƠN VỊ CHỦ QUẢN DIDONGLACO.VN</span></div>
+                    <div class="textwidget">
+                        <p style="color: #fff; user-select:none">Mã số doanh nghiệp: 2601022530</p>
+                        <p style="color: #fff; user-select:none">Đăng ký lần đầu ngày 14 tháng 1 năm 2019</p>
+                        <p style="color: #fff; user-select:none">Trụ sở chính: Khu 1, Xã Yên Kỳ, Huyện Hạ Hòa, Tỉnh Phú Thọ, Việt Nam</p>
+                        <p style="color: #fff; user-select:none">Email: sieuthaoduocltd@gmail.com</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb20">
+                    <div class="widget-title">
+                        <span>ĐƠN VỊ CHỊU TRÁCH NHIỆM SẢN PHẨM</span>
+                    </div>
+                    <div class="textwidget">
+                        <p style="color:#fff; user-select:none">CÔNG TY CỔ PHẦN QUỐC TẾ LACO</p>
+                        <p style="color:#fff; user-select:none">Mã số doanh nghiệp: 010774580029</p>
+                        <p style="color:#fff; user-select:none">Đăng ký lần đầu ngày 14 tháng 3 năm 2017</p>
+                        <p style="color:#fff; user-select:none"></p>
+                        <p style="color:#fff; user-select:none">Số 14 khu GĐ Văn công Quân Đội, phố Mai Dịch, Phường Mai Dịch, Quận Cầu Giấy, Thành Phố Hà Nội, Việt Nam</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb20">
+                    <div class="widget-title"><span>THÔNG TIN HỮU ÍCH</span></div>
+                    <ul class="menu">
+                        <li class="menu-item"><a href="">Hướng dẫn mua hàng và vận chuyển</a></li>
+<!--                        <li class="menu-item"><a href="">Hướng dẫn thanh toán</a></li>-->
+                        <li class="menu-item"><a href="">Chính sách đổi trả hàng</a></li>
+<!--                        <li class="menu-item"><a href="">Cam kết bán hàng</a></li>-->
+                        <li class="menu-item"><a href="">Chính sách bảo mật thông tin</a></li>
+                        <li class="menu-item"><a href="">Điều khoản</a></li>
+                        <li class="menu-item"><a href="">Liên hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright" style="">
+        <div class="container">
+            Copyright 2024 © <strong>LACO.VN</strong>
+        </div>
+    </div>
+
+</footer>
+
+
+<style>
+    .button-contact-cd {
+
+        position: relative;
+        z-index: 10000;
+    }
+
+    .zalo-cd {
+        bottom: 140px;
+        right: 50px;
+        position: fixed;
+
+    }
+
+    .sdt-cd {
+        bottom: 50px;
+        right: 50px;
+        position: fixed;
+
+    }
+
+    .phone-image-cd {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        position: absolute;
+        left: 14%;
+        top: 14%;
+        /* transform: translateY(-50%); */
+
+    }
+
+    .zalo-cd .phone-image-cd img {
+        background-color: #0088cc;
+
+
+    }
+
+    .zalo-cd .phone-circle-cd {
+        background-color: #71ade8;
+        box-shadow: 0px 0px 10px 2px rgb(77, 156, 231);
+
+
+    }
+
+    .sdt-cd .phone-image-cd img {
+        background-color: #00e100;
+
+    }
+
+    .sdt-cd .phone-circle-cd {
+        background-color: rgb(139, 225, 139);
+        box-shadow: 0px 0px 10px 2px rgb(143, 228, 16);
+    }
+
+    .phone-cd {
+        width: 60px;
+        height: 60px;
+        position: relative;
+    }
+
+    .phone-circle-cd {
+
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        animation: zalo 1s infinite;
+    }
+
+    .phone-image-cd img {
+        position: absolute;
+        border-radius: 50%;
+        padding: 4px;
+        z-index: 2;
+        width: 100%;
+        animation: image-cd 1s infinite;
+    }
+
+    .phone-number-cd {
+        z-index: 1;
+        color: white;
+        font-size: 20px;
+        position: absolute;
+        padding: 8px 60px 8px 10px;
+        border-radius: 50PX;
+        top: 16%;
+        right: 20%;
+        background-color: #00e100;
+    }
+
+    #footer .container {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+
+    #footer .widget-title{
+        color: var(--color-text);
+        font-size: 20px;
+    }
+
+    #footer .footer-contact{
+        text-align: center;
+    }
+
+    .footer-contact i {
+        font-size: 30px;
+        margin: -30px 5px 10px;
+    }
+
+    .footer-contact a:hover{
+        color: var(--color-text)
+    }
+
+
+    /* 2962ff
+        #0088cc*/
+
+    @keyframes zalo {
+        0% {
+            transform: scale(1);
+        }
+
+        20% {
+            transform: scale(1.1);
+        }
+
+        40% {
+            transform: scale(1.3);
+        }
+    }
+
+    @keyframes image-cd {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        25% {
+            transform: rotate(30deg);
+        }
+
+        75% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(-30deg);
+        }
+    }
+
+    @media (max-width: 740px) {
+        .zalo-cd {
+            bottom: 130px;
+            right: 20px;
+            position: fixed;
+            z-index: 100;
+
+        }
+
+        .sdt-cd {
+            bottom: 50px;
+
+            right: 20px;
+            position: fixed;
+            z-index: 100;
+
+        }
+    }
+</style>
+
+<div class="button-contact-cd">
+    <div class="zalo-cd">
+        <div class="phone-cd">
+
+            <div class="phone-circle-cd">
+
+            </div>
+            <div class="phone-image-cd">
+                <a target="_blank" href="http://zaloapp.com/qr/p/17a6npi1lz2gp">
+                    <img src="/images/contactFixed/zalo-icon.png" alt="">
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="sdt-cd">
+        <div class="phone-cd">
+
+            <div class="phone-circle-cd">
+
+            </div>
+            <div class="phone-image-cd">
+                <a target="_blank" href="http://zaloapp.com/qr/p/17a6npi1lz2gp">
+                    <img src="/images/contactFixed/phone7.png" alt="">
+                </a>
+            </div>
+            <div class="phone-number-cd">
+                0337737958
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Back to top-->
+<a href="javascript:;" id="to_top">
+    <svg class="icon-svg">
+        <use xlink:href="/images/icons/icon.svg#arrow01"></use>
+    </svg>
+</a>
+<div class="mask-content"> </div>
+<div class="close-show">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+</div>
+<!--Jquery lib-->
+<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/js/swiper.min.js"></script>
+<script type="text/javascript" src="/js/svgxuse.js"></script>
+<script type="text/javascript" src="/js/css-vars-ponyfill.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<!-- build:script -->
+
+
+<script type="text/javascript" src="/js/detail.js"></script>
+<script type="text/javascript" src='/js/jquery.ez-plus.js'></script>
+<script type="text/javascript" src="/js/lightgallery-all.min.js"></script>
+
+
+<div class="clearfix"></div>
+
+
+<script type="text/javascript">
+    function redirectLogin() {
+        window.location = "/login";
+    }
+</script>
+
+
+<script>
+    $(window).scroll(function () {
+        if ($(window).scrollTop() >= 350) {
+            $('.has-sticky').addClass('down');
+        } else {
+            $('.has-sticky').removeClass('down');
+        }
+    });
+    $(document).ready(function(){
+        var quantitiy=0;
+        $('.quantity-right-plus').click(function(e){
+            e.preventDefault();
+            var quantity = parseInt($('#quantity').val());
+            $('#quantity').val(quantity + 1);
+
+        });
+        $('.quantity-left-minus').click(function(e){
+            e.preventDefault();
+            var quantity = parseInt($('#quantity').val());
+            if(quantity>0){
+                $('#quantity').val(quantity - 1);
+            }
+        });
+
+    });
+
+
+
+    // Function to format numbers
+    function formatCurrency(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    }
+
+    // Format all price elements with class 'price'
+    document.addEventListener("DOMContentLoaded", function() {
+        const priceElements = document.querySelectorAll('.price');
+        priceElements.forEach(function(el) {
+            let value = parseFloat(el.innerText.replace(/[^0-9.-]+/g,""));
+            el.innerText = formatCurrency(value) + '₫';
+        });
+
+
+    });
+</script>
+</body>
+
+</html>

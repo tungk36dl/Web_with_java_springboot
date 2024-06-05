@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="" />
+    <meta name="description" content="">
+    <meta name="keywords" content=" Việt Nam">
+    <title>
+        Thương mại điện tử Laco
+
+    </title>
+    <link type="image/x-icon" href="http://ssl.gstatic.com/docs/doclist/images/infinite_arrow_favicon_5.ico"
+          rel="shortcut icon" />
+    <link rel="stylesheet" href="/css/bootstrap.css" media="all" />
+    <link rel="stylesheet" href="/css/general.css" media="all" />
+
+    <link type="text/css" rel="stylesheet" href="/css/lightgallery.css" />
+    <link type="text/css" rel="stylesheet" href="/css/detail.css" />
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.css} "/>
+    <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+
+    <!-- build:head -->
+</head>
+<body>
+<div class="container" th:fragment="authEmail">
+    <div class="row">
+        <div class="col-md-8 mx-auto rounded border p-4 m-4">
+            <h1> Thêm Người dùng</h1>
+            <form method="POST" enctype="multipart/form-data" th:object="${accountDto}" id="submit-account" th:action="@{/saveAccount}">
+                <!--                <input type="hidden" name="verificationCode" th:value="${verificationCode}" />-->
+                <!--                <input type="hidden" name="username" th:value="${accountDto.username}" />-->
+                <!--                <input type="hidden" name="email" th:value="${accountDto.email}" />-->
+                <!--                <input type="hidden" name="password" th:value="${accountDto.password}" />-->
+                <!--&lt;!&ndash;                <input  name="accountDto" th:value="${accountDto}">&ndash;&gt;-->
+                <!--                <input  name="account" th:value="${account.username}">-->
+                <!--                <input  name="account" th:value="${account.email}">-->
+                <!--                <input  name="account" th:value="${account.password}">-->
+
+                <div class=" row mb-3 form-group">
+                    <label class="col-sm-4 col-form-label">Nhap ma xac nhan gom 4 so</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="enteredCode" placeholder="Nhập mã xác nhận..." required />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="offset-sm-4 col-sm-4 d-grid">
+                        <button type="submit" id="btnSave" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-sm-4 d-grid">
+                        <a href="/admin/product" role="button"  class="btn btn-outline-primary">Cancel</a>
+                    </div>
+                </div>
+                <div th:if="${errorVerificationCode}" class="alert alert-danger" th:text="${errorVerificationCode}"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/js/swiper.min.js"></script>
+<script type="text/javascript" src="/js/svgxuse.js"></script>
+<script type="text/javascript" src="/js/css-vars-ponyfill.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<!-- build:script -->
+
+<script type="text/javascript" src="/js/detail.js"></script>
+<script type="text/javascript" src='/js/jquery.ez-plus.js'></script>
+<script type="text/javascript" src="/js/lightgallery-all.min.js"></script>
+
+
+<div class="clearfix"></div>
+<script>
+    $(window).scroll(function () {
+        if ($(window).scrollTop() >= 350) {
+            $('.has-sticky').addClass('down');
+        } else {
+            $('.has-sticky').removeClass('down');
+        }
+    });
+    $(document).ready(function(){
+        var quantitiy=0;
+        $('.quantity-right-plus').click(function(e){
+            e.preventDefault();
+            var quantity = parseInt($('#quantity').val());
+            $('#quantity').val(quantity + 1);
+
+        });
+        $('.quantity-left-minus').click(function(e){
+            e.preventDefault();
+            var quantity = parseInt($('#quantity').val());
+            if(quantity>0){
+                $('#quantity').val(quantity - 1);
+            }
+        });
+
+    });
+</script>
+</body>
+
+</html>
+

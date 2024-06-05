@@ -1,0 +1,38 @@
+<div th:fragment="adminDiscountCodeList">
+    <h4> List Discount Code </h4>
+
+    <a class="btn btn-primary m-3" href="/admin/discountCode/add">Add discount code</a>
+
+
+    <h3 class="p-2 text-center alert alert-danger" th:if="${result == 'false'}"> Xoa ma giam gia that bai </h3>
+    <h3 class="p-2 text-center alert alert-success" th:if="${result == 'true'}"> Xoa ma giam gia thanh cong </h3>
+    <!-- Hiển thị flash message -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <table class="table table-bordered ">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ma giam gia</th>
+            <th>Phan tram giam</th>
+            <th>So luong</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obj : ${discountCodes}">
+            <td th:text="${obj.id}">id</td>
+            <td th:text="${obj.codeName}">codeName</td>
+            <td th:text="${obj.percent}">percent</td>
+            <td th:text="${obj.quantity}">quantity</td>
+
+            <td style="white-space: nowrap">
+                <a class="btn btn-warning btn-sm" th:href="${'/admin/discountCode/edit/' + obj.id}">Edit</a>
+                <a class="btn btn-danger btn-sm"  th:href="${'/admin/discountCode/delete/' + obj.id}" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

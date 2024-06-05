@@ -1,0 +1,114 @@
+// Var detail VNE
+$vne_color: #9F224E;
+$url: "images" !default;
+
+$vne_color_hover: #087CCE;
+$font-title: 'Lora';
+$color-solid:#E5E5E5;
+
+:root {
+  --font1: 'Roboto',
+    sans-serif;
+  --vne-color: #9F224E;
+  --ione-color: #5ea201;
+  --colormain: #86b732;
+  --gray: #CCC;
+  --gray1: #4F4F4F;
+  --gray2: #BDBDBD;
+  --gray3: #757575;
+  --bg-detail: #FCFAF6;
+  --bg-agray: #f7f7f7;
+  --bg-agray1: #E5E5E5;
+  --bg-agray2: #F6F7FB;
+  --border: #E5E5E5;
+  --blue: #178af3;
+  --blue2: #38d192;
+  --white: #fff;
+  --red: #da202a;
+  --green: #5ea201;
+  --black: #131313;
+  --orange: #fa9f56;
+  --purple: #ef5170;
+
+}
+
+%font-fea {
+  font-feature-settings: 'pnum'on, 'lnum'on;
+  -webkit-font-feature-settings: 'pnum'on, 'lnum'on;
+  -moz-font-feature-settings: 'pnum'on, 'lnum'on;
+  -ms-font-feature-settings: 'pnum'on, 'lnum'on;
+}
+
+@mixin cubic-transition($delay, $duration, $property) {
+  transition: {
+    duration: $duration;
+    property: $property;
+    timing-function: cubic-bezier(.7, 1, .7, 1);
+  }
+}
+
+/* @include cubic-transition($delay: 0, $duration: 200ms, $property: (all)); */
+%has_transition {
+  @include cubic-transition($delay: 0, $duration: 200ms, $property: (all));
+}
+
+%flexbox {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+}
+
+.flexbox {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+}
+
+.no-flexbox {
+  display: inherit;
+}
+
+%clearfix {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+
+%ic_font {
+  line-height: 1;
+  font-size: 15px;
+  font-family: "vnexpress-font" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content
+  }
+
+  &:-moz-placeholder {
+    @content
+  }
+
+  &::-moz-placeholder {
+    @content
+  }
+
+  &:-ms-input-placeholder {
+    @content
+  }
+}

@@ -1,0 +1,146 @@
+<div th:fragment="adminProductList">
+
+    <div th:if="${messageDelete}">
+        <h3 class="alert alert-success" th:text="${messageDelete}"></h3>
+    </div>
+
+    <h4> List Products </h4>
+
+    <form action="/admin/product/search" method="GET" class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2"  name="data" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+
+   <div class="row d-flex justify-content-between">
+       <a class="col-2 btn btn-primary m-3" href="/admin/product/add">Add Product</a>
+       <a class="col-2 btn btn-primary m-3" href="/admin/product/little">San pham sap het hang</a>
+   </div>
+    <!-- Hiển thị flash message -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <table class="table table-bordered ">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th ><a href="/admin/product/sort/productName">ProductName</a></th>
+            <th><a class="" href="/admin/product/sort/price">Price</a></th>
+            <th>Quantity</th>
+            <th>image</th>
+            <th>Cattegory</th>
+            <th>Created at</th>
+            <th>THông số kĩ thuật</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obj : ${products}">
+            <td th:text="${obj.id}">id</td>
+            <td th:text="${obj.productName}">productName</td>
+            <td th:text="${obj.price}">price</td>
+            <td th:text="${obj.quantity}">quantity</td>
+            <td>
+                <img th:src="'/images/products/' + ${obj.image}" alt="..." width="150">
+            </td>
+            <td th:text="${obj.category != null ? obj.category.categoryName : ''}">category</td>
+<!--            <td th:text="${obj.CategoryName}">CategoryId</td>-->
+            <td th:text="${obj.createdAt}">createdAt</td>
+
+            <td><a th:href="@{/admin/product/specification/{id}(id=${obj.id})}">View Details</a></td>
+
+            <td style="white-space: nowrap">
+                <a class="btn btn-warning btn-sm" th:href="${'/admin/product/edit/' + obj.id}">Edit</a>
+                <a class="btn btn-danger btn-sm" th:href="${'/admin/product/delete/' + obj.id}"  onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+<!--    <nav aria-label="Page navigation example" class="justify-content-end">-->
+<!--        <ul class="pagination justify-content-end">-->
+<!--            <li class="page-item" th:if="${currentPage > 0}"><a class="page-link" th:href="${searchData ? '/admin/product/search?page=' + (currentPage - 1) : '/admin/product?page=' + (currentPage - 1) }">Previous</a></li>-->
+<!--            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPage)}"><a class="page-link" th:href="${searchData ? '/admin/product/search?page=' + (i - 1) : '/admin/product?page=' + (i - 1)}" th:text="${i}">1</a></li>-->
+<!--            <li class="page-item" th:if="${currentPage < (totalPage - 1)}"><a class="page-link" th:href="${searchData ? '/admin/product/search?page=' + (currentPage + 1) : '/admin/product?page=' + (currentPage + 1)}">Next</a></li>-->
+<!--        </ul>-->
+
+<!--    </nav>-->
+
+<!--    <nav aria-label="Page navigation example" class="justify-content-end">-->
+<!--                <ul th:if="${searchData}" class="pagination justify-content-end">-->
+<!--                    <li class="page-item" th:if="${currentPage > 0}">-->
+<!--                        <a class="page-link" th:href="${'/admin/product/search?data=' + searchData + '&page=' + (currentPage - 1)}">Previous</a>-->
+<!--                    </li>-->
+<!--                    <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPage - 1)}">-->
+<!--                        <a class="page-link" th:href="${'/admin/product/search?data=' + searchData + '&page=' + i}" th:text="${i + 1}">1</a>-->
+<!--                    </li>-->
+<!--                    <li class="page-item" th:if="${currentPage < (totalPage - 1)}">-->
+<!--                        <a class="page-link" th:href="${'/admin/product/search?data=' + searchData + '&page=' + (currentPage + 1)}">Next</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--    </nav>-->
+
+    <nav aria-label="Page navigation example" class="justify-content-end">
+        <ul class="pagination justify-content-end">
+            <li class="page-item" th:if="${currentPage > 0}">
+                <a class="page-link" th:href="${searchData != null ? '/admin/product/search?data=' + searchData + '&page=' + (currentPage - 1) : '/admin/product?page=' + (currentPage - 1)}">Previous</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPage - 1)}">
+                <a class="page-link" th:href="${searchData != null ? '/admin/product/search?data=' + searchData + '&page=' + i : '/admin/product?page=' + i}" th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:if="${currentPage < (totalPage - 1)}">
+                <a class="page-link" th:href="${searchData != null ? '/admin/product/search?data=' + searchData + '&page=' + (currentPage + 1) : '/admin/product?page=' + (currentPage + 1)}">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+
+<div class="row d-flex justify-content-between" >
+
+    <div class="col-3">
+        <ul>
+            <li class="list-unstyle"><a href="/admin/product/list/top3"> Top 3 sản phẩm bán chạy (dựa theo số lượng bán)</a></li>
+            <li class="list-unstyle"><a href="/admin/product/list/button3">Top 3 sản phẩm ế ẩm (dựa theo số lượng bán )</a></li>
+<!--            <li></li>-->
+        </ul>
+    </div>
+
+
+    <div class="col-8" th:if="${productsTop3}">
+        <table class="table table-bordered ">
+            <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng đã bán</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="obj : ${productsTop3}">
+                    <td th:text="${obj.productName}"></td>
+                    <td th:text="${obj.quantitySold}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-8" th:if="${productsButton3}">
+        <table class="table table-bordered ">
+            <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng đã bán</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="obj : ${productsButton3}">
+                <td th:text="${obj.productName}"></td>
+                <td th:text="${obj.quantitySold}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</div>

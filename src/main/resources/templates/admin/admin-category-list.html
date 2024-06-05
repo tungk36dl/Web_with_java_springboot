@@ -1,0 +1,40 @@
+<div th:fragment="adminCategoryList">
+    <h4> List Category </h4>
+
+    <a class="btn btn-primary m-3" href="/admin/category/add">Add Category</a>
+
+
+    <h3 class="p-2 text-center" th:if="${result == 'false'}"> Xoa category that bai </h3>
+    <h3 class="p-2 text-center" th:if="${result == 'true'}"> Xoa category thanh cong </h3>
+
+    <!-- Hiển thị flash message -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <table class="table table-bordered ">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Category Name</th>
+            <th>Brand</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obj : ${categories}">
+            <td th:text="${obj.id}">id</td>
+            <td th:text="${obj.categoryName}">CategoryName</td>
+<!--            <td th:text="${obj.product}">CategoryName</td>-->
+            <td th:text="${obj.brand != null ? obj.brand.brandName : ''}">brand</td>
+
+
+            <td style="white-space: nowrap">
+                <a class="btn btn-warning btn-sm" th:href="${'/admin/category/edit/' + obj.id}">Edit</a>
+                <a class="btn btn-danger btn-sm"  th:href="${'/admin/category/delete/' + obj.id}" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

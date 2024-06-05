@@ -1,0 +1,381 @@
+/**FONT ICON**/
+@font-face {
+    font-family: 'vnexpress-icon';
+    src: url('fonts/vnexpress-icon.eot?y32xyr');
+    src: url('fonts/vnexpress-icon.eot?y32xyr#iefix') format('embedded-opentype'),
+        url('fonts/vnexpress-icon.ttf?y32xyr') format('truetype'),
+        url('fonts/vnexpress-icon.woff?y32xyr') format('woff'),
+        url('fonts/vnexpress-icon.svg?y32xyr#vnexpress-icon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+i {
+    font-family: 'vnexpress-icon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 15px;
+    color: var(--gray2);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scss Document */
+// %ic {
+//     width: 14px;
+//     height: 14px;
+//     background: url(images/graphics/icons-video600s.svg) no-repeat;
+//     display: inline-block;
+//     vertical-align: middle;
+// }
+
+// .ic-user {
+//     background: url("images/graphics/icon_vne.svg") no-repeat;
+//     display: inline-block;
+//     vertical-align: middle;
+//     background-position: -611px -193px;
+//     width: 18px;
+//     height: 18px;
+// }
+
+// .ic-bell {
+//     background: url("images/graphics/icon_vne.svg") no-repeat;
+//     display: inline-block;
+//     vertical-align: middle;
+//     width: 18px;
+//     height: 18px;
+//     background-position: -252px -192px;
+// }
+
+// .ic-not-font {
+//     &:before {
+//         content: none !important;
+//     }
+// }
+
+// .ic-m-24h {
+//     @extend %ic;
+//     height: 12px;
+//     width: 12px;
+//     background-position: 0 -18px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-plus-square {
+//     @extend %ic;
+//     height: 12px;
+//     width: 12px;
+//     background-position: -14px -18px;
+// }
+
+// .ic-email {
+//     @extend %ic;
+//     width: 16px;
+//     height: 13px;
+//     background-position: -18px -86px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-like {
+//     @extend %ic;
+//     width: 12px;
+//     height: 12px;
+//     background-position: -33px -51px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-unlike {
+//     @extend %ic;
+//     width: 12px;
+//     height: 12px;
+//     background-position: -49px -51px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-comment {
+//     @extend %ic;
+//     width: 12px;
+//     height: 12px;
+//     background-position: -65px -51px;
+
+//     span {
+//         background: #fff;
+//         font: 400 12px arial;
+//         margin: -2px 0 0 15px;
+//         color: #9f224e;
+//         padding-right: 2px;
+//         float: left;
+//     }
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-facebook {
+//     @extend %ic;
+//     width: 24px;
+//     height: 24px;
+//     background-position: -156px -158px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-google-plus {
+//     @extend %ic;
+//     width: 24px;
+//     height: 24px;
+//     background-position: -182px -158px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-twitter {
+//     @extend %ic;
+//     width: 24px;
+//     height: 24px;
+//     background-position: -208px -158px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-arrow-down {
+//     @extend %ic;
+//     width: 16px;
+//     height: 16px;
+//     background-position: -126px -84px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-arrow-up {
+//     @extend %ic;
+//     width: 16px;
+//     height: 16px;
+//     background-position: -108px -87px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-arrow-right {
+//     @extend %ic;
+//     width: 11px;
+//     height: 16px;
+//     background-position: -42px -84px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-tag {
+//     @extend %ic;
+//     width: 18px;
+//     height: 18px;
+//     background-position: -80px -120px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-play {
+//     @extend %ic;
+//     width: 16px;
+//     height: 16px;
+//     background-position: 0 -84px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-menu {
+//     @extend %ic;
+//     width: 18px;
+//     height: 18px;
+//     background-position: 0 -120px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic_playlist {
+//     @extend %ic;
+//     width: 32px;
+//     height: 32px;
+//     background-position: -34px -202px;
+// }
+
+// .ic_playlist_24 {
+//     @extend %ic;
+//     width: 24px;
+//     height: 24px;
+//     background-position: -338px -158px;
+// }
+
+// .ic_playlist_16 {
+//     @extend %ic;
+//     width: 16px;
+//     height: 16px;
+//     background-position: -144px -86px;
+// }
+
+// .ic_playonlist {
+//     @extend %ic;
+//     width: 32px;
+//     height: 32px;
+//     background-position: -102px -202px;
+// }
+
+// .ic-rss {
+//     @extend %ic;
+//     width: 24px;
+//     height: 24px;
+//     background-position: -130px -158px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-android {
+//     @extend %ic;
+//     width: 24px;
+//     height: 24px;
+//     background-position: -26px -158px;
+// }
+
+// .ic-ios {
+//     @extend %ic;
+//     width: 24px;
+//     height: 24px;
+//     background-position: -2px -158px;
+// }
+
+// .ic-false {
+//     @extend %ic;
+//     width: 18px;
+//     height: 18px;
+//     background-position: -40px -120px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-false-small {
+//     @extend %ic;
+//     width: 12px;
+//     height: 12px;
+//     background-position: -42px -18px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .fb {
+//     @extend %ic;
+//     width: 16px;
+//     height: 16px;
+//     background-position: -54px -84px;
+// }
+
+// .yt {
+//     @extend %ic;
+//     width: 16px;
+//     height: 11px;
+//     background-position: -72px -87px;
+// }
+
+// .ic-search {
+//     @extend %ic;
+//     width: 18px;
+//     height: 18px;
+//     background-position: -60px -120px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-playlist {
+//     @extend %ic;
+//     width: 24px;
+//     height: 24px;
+//     background-position: -338px -158px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-caret-up {
+//     @extend %ic;
+//     width: 16px;
+//     height: 16px;
+//     background-position: -108px -84px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-caret-down {
+//     @extend %ic;
+//     width: 16px;
+//     height: 16px;
+//     background-position: -126px -87px;
+
+//     &:before {
+//         content: none;
+//     }
+// }
+
+// .ic-back {
+//     @extend %ic;
+//     width: 12px;
+//     height: 12px;
+//     background-position: -56px -18px;
+// }
+
+// .ic-close {
+//     @extend %ic;
+//     width: 14px;
+//     height: 14px;
+//     background-position: -80px -50px;
+// }
+
+// .ic-refesh {
+//     @extend %ic;
+//     width: 18px;
+//     height: 18px;
+//     background-position: -100px -120px;
+// }

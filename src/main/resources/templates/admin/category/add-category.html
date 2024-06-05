@@ -1,0 +1,39 @@
+<div class="container" th:fragment="addCategory">
+    <div class="row">
+        <div class="col-md-8 mx-auto rounded border p-4 m-4">
+            <h1> Thêm thể loại </h1>
+            <form method="POST"  th:object="${categoryDto}" action="/admin/category/add">
+                <div class=" row mb-3 form-group">
+                    <label class="col-sm-4 col-form-label">Tên thể loại</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="categoryName" placeholder="Nhap categoryName..." th:field="${categoryDto.categoryName}">
+                        <!--                        <ul th:if="${#status.fieldErrors('productName')}" th:class="${#status.fieldError('productName') ? 'text-danger' : ''}">-->
+                        <!--                            <li th:each="error : ${#status.fieldErrors('productName')}" th:text="${error.getDefaultMessage()}"></li>-->
+                        <!--                        </ul>-->
+                    </div>
+                    <p class="text-danger" th:text="${messageError != null ? messageError : ''}"></p>
+                </div>
+
+                <div class="row mb-3 form-group">
+                    <label class="col-sm-4 col-form-label">Hãng </label>
+                    <div class="col-sm-8">
+                        <select class="form-select" th:field="*{brandName}">
+                            <option th:each="obj : ${brands}" th:value="${obj.brandName}" th:text="${obj.brandName}"></option>
+
+                        </select>
+                        <!--                        <p th:if="${#fields.hasErrors('category')}" th:errorclass="text-danger" th:errors="${productDto.category}"></p>-->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="offset-sm-4 col-sm-4 d-grid">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-sm-4 d-grid">
+                        <a href="/admin/category" role="button" class="btn btn-outline-primary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

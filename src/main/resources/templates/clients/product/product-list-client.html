@@ -1,0 +1,227 @@
+<div th:fragment="ProductListClient">
+
+    <h3 th:if="${successMessage}" class="alert alert-success"  th:text="${successMessage}"></h3>
+
+    <section class="container clearfix fixed-height mb24">
+        <div class="row page-title-inner align-center mb20">
+            <div class="col-lg-6 mb20">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <form action="/product/search" method="GET" class="form-inline mt-2 mt-md-0">
+                            <input class="form-control mr-sm-2"  name="data" type="text" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+<!--                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>-->
+<!--                        <li class="breadcrumb-item active" aria-current="page">SẢN PHẨM CHĂM SÓC DA MAROSA</li>-->
+                    </ol>
+                </nav>
+            </div>
+            <div class="sort-select col-lg-6 mb20">
+                <a class="filter-control" href="javascript:;">
+                    <svg class="icon-svg">
+                        <use xlink:href="images/icons/icon.svg#filter"></use>
+                    </svg>
+                    <span>LỌC</span>
+                </a>
+                <div class="flex align-center">
+                    <span class="d-md-block d-none">Sắp xếp theo giá</span>
+
+                    <select class="form-control bg-agray" id="sortOptions" onchange="handleSortChange()">
+                        <option  value="date" onclick="handleOptionClick(this)">Mới nhất</option>
+                        <option  value="price-asc" id="asc" onclick="handleOptionClick(this)">Thứ tự theo giá: thấp đến cao</option>
+                        <option  value="price-desc" id="desc" onclick="handleOptionClick(this)"> Thứ tự theo giá: cao xuống thấp</option>
+                    </select>
+
+                    <script>
+                        function handleSortChange() {
+                            var select = document.getElementById("sortOptions");
+                            var selectedValue = select.value;
+
+                            if (selectedValue === "date") {
+                                // Redirect to the appropriate URL for "date"
+                                window.location.href = "/product/list";
+                            } else if (selectedValue === "price-asc") {
+                                // Redirect to the appropriate URL for "price-asc"
+                                window.location.href = "/product/list/asc";
+                            } else if (selectedValue === "price-desc") {
+                                // Redirect to the appropriate URL for "price-desc"
+                                window.location.href = "/product/list/desc";
+                            }
+                        }
+
+                        // // Set the selected option based on the current URL
+                        // var currentUrl = window.location.pathname;
+                        // if (currentUrl === "/product/list") {
+                        //     select.value = "date";
+                        //
+                        // } else if (currentUrl === "/product/list/asc") {
+                        //     select.value = "price-asc";
+                        //     document.getElementById('asc').selected=true;
+                        //
+                        // } else if (currentUrl === "/product/list/desc") {
+                        //     select.value = "price-desc";
+                        //     document.getElementById('desc').selected=true;
+                        //
+                        // }
+                    </script>
+
+                    </select>
+
+                    <script>
+                        function handleOptionClick(option) {
+                            var select = document.getElementById("sortOptions");
+
+                            // Xóa thuộc tính selected của tất cả các option
+                            for (var i = 0; i < select.options.length; i++) {
+                                select.options[i].removeAttribute("selected");
+                            }
+
+                            // Thêm thuộc tính selected cho option được chọn
+                            option.setAttribute("selected", "selected");
+                        }
+                    </script>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row category-page-row">
+            <div class="col-lg-3 product_categories mb30">
+                <span class="widget-title shop-sidebar font-weight-bold">Danh mục sản phẩm</span>
+                <div class="is-divider small"></div>
+
+                    <ul class="cat-item cat-item-163" th:each="brand : ${brands}">
+                        <li>
+                            <a class="m-2 font-weight-bold" th:href="'/product/list/' + ${brand.brandName}" th:text="${brand.brandName}"></a>
+                            <ul th:if="${brand.categories != null}" class="ml-3">
+                                <li class="mt-3" th:each="category : ${brand.categories}">
+                                    <a class="m-2" th:href="'/product/list/' + ${brand.brandName} + '/' + ${category.id}" th:text="${category.categoryName}"></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var pathname = window.location.pathname;
+
+                        // Lấy tất cả các thẻ <a> trong danh mục sản phẩm
+                        var links = document.querySelectorAll('.cat-item a');
+
+                        links.forEach(function(link) {
+                            if (link.getAttribute('href') === pathname) {
+                                link.parentElement.style.color = '#00e100';
+                                link.parentElement.style.fontWeight = 'bold';
+                            }
+                        });
+                    });
+                </script>
+
+                <span class="widget-title shop-sidebar">Lọc theo giá</span>
+                <div class="is-divider small"></div>
+               <!-- <div class="price-filter-container">
+                    <div id="slider-range"></div>
+                    <form>
+                        <input type="hidden" name="min-value" value="">
+                        <input type="hidden" name="max-value" value="">
+                    </form>
+                    <div class="row slider-labels">
+                        <div class="col-6 mb15">
+                            <div class="wrap">
+                                <span id="slider-range-value1"></span> VNĐ
+                            </div>
+
+                        </div>
+                        <div class="col-6 mb15">
+                            <div class="wrap text-right">
+                                <span id="slider-range-value2"></span> VNĐ
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-green btn">Lọc</button>
+                </div>-->
+
+                <div class="price-filter-container">
+                    <div id="slider-range"></div>
+                    <form id="price-filter-form" action="/product/list/priceBetween" method="post">
+                        <input type="hidden" name="minValue" value="">
+                        <input type="hidden" name="maxValue" value="">
+                        <div class="row slider-labels">
+                            <div class="col-6 mb15">
+                                <div class="wrap">
+                                    <span id="slider-range-value1"></span> VNĐ
+                                </div>
+                            </div>
+                            <div class="col-6 mb15">
+                                <div class="wrap text-right">
+                                    <span id="slider-range-value2"></span> VNĐ
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-green btn">Lọc</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-lg-9">
+<!--                <p>Marosa – Nước hoa hồng hữu cơ được chưng cất tươi từ trang trại hoa hồng ngoại hữu cơ Green Farm lớn nhất Việt Nam, theo tiêu chuẩn Vietgap.<br>-->
+<!--                    Marosa mang trực tiếp giọt nước chưng đọng từ những cánh hoa hồng tinh khiết nhất chạm đến ngay làn da của bạn với hương thơm tự nhiên và đặc trưng của hoa hồng mà không có bất kỳ 1 chất phụ gia nào có thể thay thế được.</p>-->
+                <div class="list-product list-product_new">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb20" th:each="obj : ${products}">
+                            <div class="product-small">
+                                <div class="gift-sale">
+                                    <div class="sale">-5%</div>
+                                    <div class="code">Quà tặng 600K</div>
+                                </div>
+                                <div class="box-image">
+                                    <a th:href="'/product/' + ${obj.id}">
+                                        <img th:src="'/images/products/' + ${obj.image}">
+                                    </a>
+                                </div>
+                                <div class="box-text">
+<!--                                    <div class="note" >SẢN PHẨM CHĂM SÓC DA MAROSA</div>-->
+                                    <h3><a class="fw-bold fs-lg" th:href="'/product/' + ${obj.id}" th:text="${obj.productName}"></a></h3>
+                                    <div class="ct_star">
+
+                                    </div>
+                                    <div class="">
+<!--                                        <div class="old">480.000 đ</div>-->
+                                        <div class="new " ><strong class="price" th:text="${obj.price}"></strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <nav aria-label="Page navigation example" class="justify-content-end">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item" th:if="${currentPage > 0}">
+                            <a class="page-link  bg-secondary text-white" th:href="${searchData != null ? '/product/search?data=' + searchData + '&page=' + (currentPage - 1) : '/product?page=' + (currentPage - 1)}">Previous</a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPage - 1)}">
+                            <a class="page-link bg-secondary text-white" th:href="${searchData != null ? '/product/search?data=' + searchData + '&page=' + i : '/product?page=' + i}" th:text="${i + 1}">1</a>
+                        </li>
+                        <li class="page-item" th:if="${currentPage < (totalPage - 1)}">
+                            <a class="page-link  bg-secondary text-white" th:href="${searchData != null ? '/product/search?data=' + searchData + '&page=' + (currentPage + 1) : '/product?page=' + (currentPage + 1)}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!--Jquery lib-->
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/js/svgxuse.js"></script>
+    <script type="text/javascript" src="/js/css-vars-ponyfill.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/slider-range.js"></script>
+
+
+</div>

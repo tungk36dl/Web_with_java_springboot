@@ -1,0 +1,68 @@
+<div th:fragment="NewListClient">
+    <section class="container clearfix fixed-height mt20" th:object="${news}">
+        <div class="text-center mb30">
+            <h1 class="title-detail txt_18 medium mb10" style="color: #555;">CATEGORY ARCHIVES: TIN TỨC</h1>
+            <P>Trang tin tức công ty TNHHH Quốc Tế Laco</P>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 mb30">
+                <div class="list-article_item">
+                    <div class="article_item big" th:each="obj : ${news}">
+                        <a th:href="'/new/' + ${obj.id}" th:title="${obj.newName}">
+                            <div class="tag">TIN TỨC</div>
+                            <h3 class="title_new" th:text="${obj.newName}"></h3>
+                            <div class="note" th:text="${obj.createdAt}">POSTED ON 15 THÁNG TÁM, 2020 BY MỸ PHẨM HỮU CƠ LACO</div>
+                            <div class="box-image">
+                            <span class="thumb thumb_5x4">
+                                <img th:src="'images/news/'+ ${obj.image}">
+                            </span>
+                            </div>
+                            <div class="box-text">
+                                <p th:text="${obj.description}">Có lẽ hàng nghìn chị em phụ nữ đang cùng chung tâm rạng hồi hộp và háo hức khi cùng chờ đợi một trong những sự kiện đình đám trong ngành làm đẹp trong vài ngày tới: Ra mắt sản phẩm máy rửa mặt Lacco Luxury. Chiếc máy được các chuyên gia chăm sóc sắc[…]</p>
+                                <div class="text-center"><span class="red-more">Continue reading →</span></div>
+                            </div>
+                        </a>
+                        <div class="entry-meta flex space-between">
+                            <div>
+                                Posted in Tin tức  |  Web hay
+                            </div>
+                            <div>Leave a comment</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="pagination" class="folder">
+                    <a href="/thoi-trang-p2" class="pagination_btn pa_prev">
+                        <svg class="icon-svg">
+                            <use xlink:href="images/icons/icon.svg#arrow01"></use>
+                        </svg>
+                    </a>
+                    <a class=" active" href="javascript:void(0)"><span class="pagi-left"></span><span class="pagi-mid">1</span><span class="pagi-right"></span></a>
+                    <a class="" href="/thoi-trang-p2"><span class="pagi-left"></span><span class="pagi-mid">2</span><span class="pagi-right"></span></a>
+                    <a class="" href="/thoi-trang-p3"><span class="pagi-left"></span><span class="pagi-mid">3</span><span class="pagi-right"></span></a>
+                    <a class="" href="/thoi-trang-p4"><span class="pagi-left"></span><span class="pagi-mid">4</span><span class="pagi-right"></span></a>
+                    <a href="/thoi-trang-p2" class="pagination_btn pa_next">
+                        <svg class="icon-svg">
+                            <use xlink:href="images/icons/icon.svg#arrow01"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 post-sidebar mb30">
+                <div class="box-category mb20">
+                    <span class="widget-title "><span>Latest Posts</span></span>
+                    <div class="is-divider small"></div>
+                    <ul class="recent-blog-posts clearfix">
+                        <li th:each="obj : ${news}">
+                            <div class="badge-inner">
+                                <div class="date">08</div>
+                                <div>12</div>
+                            </div>
+                            <h3><a th:href="'/new/' + ${obj.id}" th:text="${obj.newName}"></a></h3>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

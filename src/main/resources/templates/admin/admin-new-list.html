@@ -1,0 +1,51 @@
+<div th:fragment="adminNewList">
+    <h4> List New </h4>
+
+    <form action="/admin/new/search" method="GET" class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2"  name="data" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+
+    <a class="btn btn-primary m-3" href="/admin/new/add">Add New</a>
+
+
+    <h3 class="p-2 text-center" th:if="${result == 'false'}"> Xoa new that bai </h3>
+    <h3 class="p-2 text-center" th:if="${result == 'true'}"> Xoa new thanh cong </h3>
+
+    <!-- Hiển thị flash message -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <table class="table table-bordered ">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>NewName</th>
+            <th>Description</th>
+            <th>Content</th>
+            <th>Image</th>
+            <th>Acction</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obj : ${news}">
+            <td th:text="${obj.id}">id</td>
+            <td th:text="${obj.newName}">newname</td>
+            <td th:text="${obj.description}">description</td>
+            <td th:text="${obj.content}">content</td>
+            <td >
+                <img th:src="'/images/news/' + ${obj.image}" alt="..." width="150">
+            </td>
+
+            <td >
+                <a class="btn btn-warning btn-sm" th:href="${'/admin/new/edit/' + obj.id}">Edit</a>
+                <a class="btn btn-danger btn-sm" th:href="${'/admin/new/delete/' + obj.id}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
